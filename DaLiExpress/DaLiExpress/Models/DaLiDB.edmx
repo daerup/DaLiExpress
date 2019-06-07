@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DaLi_GameExpressModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DeveloperStudio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
+          <Property Name="Foundingdate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="Release" Type="date" Nullable="false" />
+          <Property Name="PublisherID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameDeveloperStudio">
+          <Key>
+            <PropertyRef Name="GameID" />
+            <PropertyRef Name="DeveloperStudioID" />
+          </Key>
+          <Property Name="GameID" Type="int" Nullable="false" />
+          <Property Name="DeveloperStudioID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GamePlatform">
+          <Key>
+            <PropertyRef Name="GameID" />
+            <PropertyRef Name="PlatformID" />
+          </Key>
+          <Property Name="GameID" Type="int" Nullable="false" />
+          <Property Name="PlatformID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Platform">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Publisher">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="text" Nullable="false" />
+          <Property Name="Foundingdate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Game_Publisher">
+          <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="PublisherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameDeveloperStudio_DeveloperStudio">
+          <End Role="DeveloperStudio" Type="Self.DeveloperStudio" Multiplicity="1" />
+          <End Role="GameDeveloperStudio" Type="Self.GameDeveloperStudio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeveloperStudio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GameDeveloperStudio">
+              <PropertyRef Name="DeveloperStudioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameDeveloperStudio_Game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="GameDeveloperStudio" Type="Self.GameDeveloperStudio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GameDeveloperStudio">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GamePlatform_Game">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="GamePlatform" Type="Self.GamePlatform" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GamePlatform">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GamePlatform_Platform">
+          <End Role="Platform" Type="Self.Platform" Multiplicity="1" />
+          <End Role="GamePlatform" Type="Self.GamePlatform" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Platform">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GamePlatform">
+              <PropertyRef Name="PlatformID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DaLi_GameExpressModelStoreContainer">
+          <EntitySet Name="DeveloperStudio" EntityType="Self.DeveloperStudio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameDeveloperStudio" EntityType="Self.GameDeveloperStudio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GamePlatform" EntityType="Self.GamePlatform" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Platform" EntityType="Self.Platform" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publisher" EntityType="Self.Publisher" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Game_Publisher" Association="Self.FK_Game_Publisher">
+            <End Role="Publisher" EntitySet="Publisher" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameDeveloperStudio_DeveloperStudio" Association="Self.FK_GameDeveloperStudio_DeveloperStudio">
+            <End Role="DeveloperStudio" EntitySet="DeveloperStudio" />
+            <End Role="GameDeveloperStudio" EntitySet="GameDeveloperStudio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameDeveloperStudio_Game" Association="Self.FK_GameDeveloperStudio_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="GameDeveloperStudio" EntitySet="GameDeveloperStudio" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GamePlatform_Game" Association="Self.FK_GamePlatform_Game">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="GamePlatform" EntitySet="GamePlatform" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GamePlatform_Platform" Association="Self.FK_GamePlatform_Platform">
+            <End Role="Platform" EntitySet="Platform" />
+            <End Role="GamePlatform" EntitySet="GamePlatform" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DaLi_GameExpressModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DeveloperStudio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Foundingdate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Game" Relationship="Self.GameDeveloperStudio" FromRole="DeveloperStudio" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rating" Type="Int32" />
+          <Property Name="Release" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PublisherID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Publisher" Relationship="Self.FK_Game_Publisher" FromRole="Game" ToRole="Publisher" />
+          <NavigationProperty Name="DeveloperStudio" Relationship="Self.GameDeveloperStudio" FromRole="Game" ToRole="DeveloperStudio" />
+          <NavigationProperty Name="Platform" Relationship="Self.GamePlatform" FromRole="Game" ToRole="Platform" />
+        </EntityType>
+        <EntityType Name="Platform">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.GamePlatform" FromRole="Platform" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="Publisher">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Foundingdate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Game" Relationship="Self.FK_Game_Publisher" FromRole="Publisher" ToRole="Game" />
+        </EntityType>
+        <Association Name="FK_Game_Publisher">
+          <End Role="Publisher" Type="Self.Publisher" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publisher">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="PublisherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GameDeveloperStudio">
+          <End Role="DeveloperStudio" Type="Self.DeveloperStudio" Multiplicity="*" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+        </Association>
+        <Association Name="GamePlatform">
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <End Role="Platform" Type="Self.Platform" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DaLi_GameExpressEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DeveloperStudio" EntityType="Self.DeveloperStudio" />
+          <EntitySet Name="Game" EntityType="Self.Game" />
+          <EntitySet Name="Platform" EntityType="Self.Platform" />
+          <EntitySet Name="Publisher" EntityType="Self.Publisher" />
+          <AssociationSet Name="FK_Game_Publisher" Association="Self.FK_Game_Publisher">
+            <End Role="Publisher" EntitySet="Publisher" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="GameDeveloperStudio" Association="Self.GameDeveloperStudio">
+            <End Role="DeveloperStudio" EntitySet="DeveloperStudio" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="GamePlatform" Association="Self.GamePlatform">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Platform" EntitySet="Platform" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DaLi_GameExpressModelStoreContainer" CdmEntityContainer="DaLi_GameExpressEntities">
+          <EntitySetMapping Name="DeveloperStudio">
+            <EntityTypeMapping TypeName="DaLi_GameExpressModel.DeveloperStudio">
+              <MappingFragment StoreEntitySet="DeveloperStudio">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Foundingdate" ColumnName="Foundingdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Game">
+            <EntityTypeMapping TypeName="DaLi_GameExpressModel.Game">
+              <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Release" ColumnName="Release" />
+                <ScalarProperty Name="PublisherID" ColumnName="PublisherID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Platform">
+            <EntityTypeMapping TypeName="DaLi_GameExpressModel.Platform">
+              <MappingFragment StoreEntitySet="Platform">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Publisher">
+            <EntityTypeMapping TypeName="DaLi_GameExpressModel.Publisher">
+              <MappingFragment StoreEntitySet="Publisher">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Foundingdate" ColumnName="Foundingdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="GameDeveloperStudio" TypeName="DaLi_GameExpressModel.GameDeveloperStudio" StoreEntitySet="GameDeveloperStudio">
+            <EndProperty Name="DeveloperStudio">
+              <ScalarProperty Name="ID" ColumnName="DeveloperStudioID" />
+            </EndProperty>
+            <EndProperty Name="Game">
+              <ScalarProperty Name="ID" ColumnName="GameID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="GamePlatform" TypeName="DaLi_GameExpressModel.GamePlatform" StoreEntitySet="GamePlatform">
+            <EndProperty Name="Game">
+              <ScalarProperty Name="ID" ColumnName="GameID" />
+            </EndProperty>
+            <EndProperty Name="Platform">
+              <ScalarProperty Name="ID" ColumnName="PlatformID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
