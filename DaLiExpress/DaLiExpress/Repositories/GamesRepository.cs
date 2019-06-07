@@ -2,24 +2,27 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography;
 using DaLiExpress.Models;
 
 namespace DaLiExpress.Repositories
 {
     public class GamesRepository : RepositoryBase<Game>, IGamesRepository
     {
+        private readonly DaLi_GameExpressEntities daliGameExpressEntities;
         public GamesRepository(DaLi_GameExpressEntities context) : base(context)
         {
+            this.daliGameExpressEntities = context;
         }
 
         public IEnumerable<Game> GetHighestRatedGames(int numberOfGamesToReceive)
         {
-            return base.GetAll().OrderBy(g => g.Rating).Take(numberOfGamesToReceive).ToList();
+            return this.daliGameExpressEntities.Game.OrderBy(g => g.Rating).Take(numberOfGamesToReceive).ToList();
         }
 
         public Game GetRandomGame()
         {
-            throw new System.NotImplementedException();
+            return this.daliGameExpressEntities.Game.ElementAt(new Random().Next(this.daliGameExpressEntities.Game.Count()));
         }
     }
 }

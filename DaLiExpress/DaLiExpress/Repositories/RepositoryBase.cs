@@ -14,14 +14,15 @@ namespace DaLiExpress.Repositories
         {
             this.entities = context.Set<T>();
         }
-        public T GetById(int id)
-        {
-            return this.entities.Find(id);
-        }
 
         public IEnumerable<T> GetAll()
         {
             return this.entities.ToList();
+        }
+
+        public T GetById(int id)
+        {
+            return this.entities.Find(id);
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
