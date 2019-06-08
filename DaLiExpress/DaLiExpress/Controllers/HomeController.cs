@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace DaLiExpress.Controllers
 {
@@ -10,13 +6,13 @@ namespace DaLiExpress.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
         public ActionResult Game()
         {
-            ViewBag.Message = "Your contact page.";
+            this.ViewBag.Message = "Your contact page.";
 
-            return View();
+            return this.View();
         }
         
         
