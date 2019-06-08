@@ -1,7 +1,7 @@
 ﻿using System;
 using DaLiExpress.Repositories;
 
-namespace DaLiExpress.UnitOfWork
+namespace DaLiExpress.UnitsOfWork
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -14,7 +14,6 @@ namespace DaLiExpress.Repositories
             this.daliGameExpressEntities = context;
         }
 
-
         public IEnumerable<Publisher> GetBestRatedPublishers()
         {
             Publisher publisher = this.daliGameExpressEntities.Publisher.OrderBy(p => this.GetAverageGameRating(p))

@@ -11,9 +11,15 @@ namespace DaLiExpress.UnitOfWork
         {
             this.context = context;
             this.Game = new GameRepository(context);
+            this.Platform = new PlatformRepository(context);
+            this.DeveloperStudio = new DeveloperStudioRepository(context);
+            this.Publisher = new PublisherRepository(context);
         }
 
         public IGameRepository Game { get; }
+        public IPlatformRepository Platform { get; }
+        public IDeveloperStudioRepository DeveloperStudio { get; }
+        public IPublisherRepository Publisher{ get; }
 
         public int Complete()
         {
