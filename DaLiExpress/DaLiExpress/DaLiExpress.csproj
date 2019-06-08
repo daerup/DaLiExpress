@@ -138,6 +138,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Repositories\DeveloperStudioRepository.cs" />
+    <Compile Include="Repositories\IDeveloperStudioRepository.cs" />
+    <Compile Include="Repositories\IPlatformRepository.cs" />
+    <Compile Include="Repositories\IPublisherRepository.cs" />
+    <Compile Include="Repositories\PlatformRepository.cs" />
+    <Compile Include="Repositories\PublisherRepository.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Models\DaLiDB.Context.cs">
       <AutoGen>True</AutoGen>
