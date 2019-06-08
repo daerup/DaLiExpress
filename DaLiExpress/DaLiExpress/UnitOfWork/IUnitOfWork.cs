@@ -5,7 +5,7 @@ namespace DaLiExpress.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGamesRepository Games { get; }
+        IGameRepository Game { get; }
 
         int Complete();
     }

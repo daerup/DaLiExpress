@@ -10,10 +10,10 @@ namespace DaLiExpress.UnitOfWork
         public UnitOfWork(DaLi_GameExpressEntities context)
         {
             this.context = context;
-            this.Games = new GamesRepository(context);
+            this.Game = new GameRepository(context);
         }
 
-        public IGamesRepository Games { get; }
+        public IGameRepository Game { get; }
 
         public int Complete()
         {

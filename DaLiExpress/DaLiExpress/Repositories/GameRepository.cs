@@ -7,10 +7,10 @@ using DaLiExpress.Models;
 
 namespace DaLiExpress.Repositories
 {
-    public class GamesRepository : RepositoryBase<Game>, IGamesRepository
+    public class GameRepository : RepositoryBase<Game>, IGameRepository
     {
         private readonly DaLi_GameExpressEntities daliGameExpressEntities;
-        public GamesRepository(DaLi_GameExpressEntities context) : base(context)
+        public GameRepository(DaLi_GameExpressEntities context) : base(context)
         {
             this.daliGameExpressEntities = context;
         }

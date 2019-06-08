@@ -3,7 +3,7 @@ using DaLiExpress.Models;
 
 namespace DaLiExpress.Repositories
 {
-    public interface IGamesRepository : IRepositoryBase<Game>
+    public interface IGameRepository : IRepositoryBase<Game>
     {
         IEnumerable<Game> GetHighestRatedGames(int numberOfGamesToReceive);
         Game GetRandomGame();
