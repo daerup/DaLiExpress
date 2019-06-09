@@ -144,7 +144,6 @@
     <Compile Include="Repositories\IPublisherRepository.cs" />
     <Compile Include="Repositories\PlatformRepository.cs" />
     <Compile Include="Repositories\PublisherRepository.cs" />
-    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
     <Compile Include="Models\DaLiDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -177,7 +176,8 @@
     <Compile Include="Repositories\IGameRepository.cs" />
     <Compile Include="Repositories\IRepositoryBase.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
-    <Compile Include="UnitOfWork\UnitOfWork.cs" />
+    <Compile Include="UnitsOfWork\IUnitOfWork.cs" />
+    <Compile Include="UnitsOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

@@ -1,7 +1,7 @@
 ﻿using DaLiExpress.Models;
 using DaLiExpress.Repositories;
 
-namespace DaLiExpress.UnitOfWork
+namespace DaLiExpress.UnitsOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {

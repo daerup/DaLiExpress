@@ -11,7 +11,6 @@ namespace DaLiExpress.Controllers
         public ActionResult Game()
         {
             this.ViewBag.Message = "Your contact page.";
-
             return this.View();
         }
         
