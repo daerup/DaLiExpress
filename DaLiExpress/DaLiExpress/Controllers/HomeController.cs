@@ -44,7 +44,7 @@ namespace DaLiExpress.Controllers
 
         public SelectList GetListOfPublishers(Game gameToEdit)
         {
-            SelectList selectList = new SelectList(this.unitOfWork.Publisher.GetAll().Select(p => p.ID).ToList(), gameToEdit.Publisher.ID);
+            SelectList selectList = new SelectList(this.unitOfWork.Publisher.GetAll().Select(p => p.ID).ToList());
             return selectList;
         }
 
@@ -53,7 +53,7 @@ namespace DaLiExpress.Controllers
             var oldGame = this.unitOfWork.Game.GetById(updatedGame.ID);
             oldGame.Name = updatedGame.Name;
             oldGame.Release = updatedGame.Release;
-            oldGame.PublisherID = 5;
+            oldGame.PublisherID = updatedGame.Publisher.ID;
         }
     }
 }
