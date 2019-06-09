@@ -1,3 +1,5 @@
+@using DaLiExpress.Models
+@using Microsoft.Ajax.Utilities
 @model dynamic
 @{
     this.ViewBag.Title = "Games";
@@ -5,4 +7,60 @@
 
 <h1 class="jumbotron">DaLi GameExpress</h1>
 
+<h2>Index</h2>
+<p>
+</p>
+<table class ="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Rating
+        </th>
+        <th>
+            Platform
+        </th>
+        <th>
+            Publisher
+        </th>
+        <th>
+            Developer Studio
+        </th>
+        <th>
+            Mutationen
+        </th>
+    </tr>
+    @foreach(Game game in this.ViewBag.AllGames) {
+        <tr>
+            <td>
+                @game.ID
+            </td>
+            <td>
+                @game.Name
+            </td>
+            <td>
+                @game.Rating
+            </td>
+            <td>
+                @*@editedGame.Platform.ForEach(p => p.Name);*@
+            </td>
+            <td>
+                @game.Publisher.Name
+            </td>
+            <td>
+                @game.DeveloperStudio
+            </td>
+            <td>
+                @(this.Html.ActionLink("Edit", "Edit", new { id=game.ID}))
+            </td>
+        </tr>
+    }
+</table>
 @* <div class="row">Hey</div> *@
+@*@Html.ActionLink("Edit", "Edit", new { id=}) |
+                @Html.ActionLink("Details", "Details", new { id=item.HotelID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.HotelID })*@

@@ -1,7 +1,13 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using System.Web.WebPages.Html;
 using DaLiExpress.Models;
+using DaLiExpress.Repositories;
 using DaLiExpress.UnitsOfWork;
+using Microsoft.Ajax.Utilities;
+using SelectListItem = System.Web.Mvc.SelectListItem;
 
 namespace DaLiExpress.Controllers
 {
@@ -10,17 +16,7 @@ namespace DaLiExpress.Controllers
         UnitOfWork unitOfWork = new UnitOfWork(new DaLi_GameExpressEntities());
         public ActionResult Index()
         {
-            this.unitOfWork.Game.Add(new Game()
-            {
-                Name = "Cuphead",
-                Release = new DateTime(2013, 10, 23),
-                Rating = 83,
-                PublisherID = 1,
-            });
-
-            var enumerable = this.unitOfWork.Game.GetAll();
-            var randomGame = this.unitOfWork.Game.GetRandomGame();
-            var complete = this.unitOfWork.Complete();
+            this.ViewBag.AllGames = this.unitOfWork.Game.GetAll();
             return this.View();
         }
         public ActionResult Game()
@@ -28,7 +24,36 @@ namespace DaLiExpress.Controllers
             this.ViewBag.Message = "Your contact page.";
             return this.View();
         }
-        
-        
+
+        public ActionResult Edit (int id)
+        {
+            Game gameToEdit = this.unitOfWork.Game.GetById(id);
+            this.ViewBag.GameToEdit = gameToEdit;
+            this.ViewBag.Publisher = this.GetListOfPublishers(gameToEdit);
+            return this.View(gameToEdit);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Game editedGame)
+        {
+            this.ViewBag.Message = "Gespeichert";
+            this.UpdateAllPropertiesOfAGameTo(editedGame);
+            this.unitOfWork.Complete();
+            return this.View();
+        }
+
+        public SelectList GetListOfPublishers(Game gameToEdit)
+        {
+            SelectList selectList = new SelectList(this.unitOfWork.Publisher.GetAll().Select(p => p.ID).ToList(), gameToEdit.Publisher.ID);
+            return selectList;
+        }
+
+        private void UpdateAllPropertiesOfAGameTo(Game updatedGame)
+        {
+            var oldGame = this.unitOfWork.Game.GetById(updatedGame.ID);
+            oldGame.Name = updatedGame.Name;
+            oldGame.Release = updatedGame.Release;
+            oldGame.PublisherID = 5;
+        }
     }
 }
