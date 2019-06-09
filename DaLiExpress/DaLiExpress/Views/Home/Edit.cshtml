@@ -1,8 +1,8 @@
-﻿@using DaLiExpress.Models
+﻿@using System.Activities.Expressions
+@using DaLiExpress.Models
 @model Game
 @{
     this.ViewBag.Title = "Edit";
-     
 }
 
 <h2>Edit</h2>
@@ -12,33 +12,43 @@
     @(this.Html.ValidationSummary(
           true
           ))
-    <fieldset>
-        <legend>
-            Game
-        </legend>
-        <div class="editor-label">
-            @(this.Html.LabelFor(model => model.Name))
-        </div>
-        <div class="editor-field">
-            @(this.Html.EditorFor(model => model.Name))
-            @(this.Html.ValidationMessageFor(model => model.Name))
-        </div>
-        <div class="editor-label">
-            @(this.Html.LabelFor(model => model.Publisher));
-        </div>
-        <div class="editor-field">
-            @(this.Html.DropDownListFor(model => model.Publisher.ID, (IEnumerable<SelectListItem>)this.ViewBag.Publisher))
-            @(this.Html.ValidationMessageFor(model => model.Publisher))
-        </div>
+<fieldset>
+    <legend>
+        Game
+    </legend>
+    <div class="editor-label">
+        @(this.Html.LabelFor(model => model.Name))
+    </div>
+    <div class="editor-field">
+        @(this.Html.EditorFor(model => model.Name))
+        @(this.Html.ValidationMessageFor(model => model.Name))
+    </div>
+    <div class="editor-label">
+        @(this.Html.LabelFor(model => model.Rating))
+    </div>
+    <div class="editor-field">
+        @(this.Html.EditorFor(model => model.Rating))
+        @(this.Html.ValidationMessageFor(model => model.Rating))
+    </div>
+    <div class="editor-label">
+        @(this.Html.LabelFor(model => model.Publisher));
+    </div>
+    <div class="editor-field">
+        @(this.Html.DropDownListFor(model => model.Publisher.ID, (IEnumerable<SelectListItem>)ViewBag.Publishers))
+        @(this.Html.ValidationMessageFor(model => model.Publisher))
+    </div>
+    <p>
+        <br />
+        <input type="button" class="btn btn-default" value="Go Back" onclick="location.href = '@Url.Action("Index", "Home")'" />
+        <input type="submit" value="Save" class="btn btn-default" />
+    </p>
+    @if (ViewBag.Message != null)
+    {
         <p>
-            <input type="submit" value="Save" class="btn btn-default"/>
+            <b>@ViewBag.Message </b>
         </p>
-    </fieldset>
+    }
+</fieldset>
 }
-<div>
-    @(this.Html.ActionLink("Back to List", "Index"))
-</div>
 
 @section Scripts {@Scripts.Render("~/bundles/jqueryval")}
-
-

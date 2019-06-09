@@ -4,12 +4,8 @@
 @{
     this.ViewBag.Title = "Games";
 }
-
 <h1 class="jumbotron">DaLi GameExpress</h1>
-
 <h2>Index</h2>
-<p>
-</p>
 <table class ="table">
     <tr>
         <th>
@@ -46,13 +42,13 @@
                 @game.Rating
             </td>
             <td>
-                @*@editedGame.Platform.ForEach(p => p.Name);*@
+                @string.Join(", ", game.Platform.Select(p => p.Name).ToList())
             </td>
             <td>
                 @game.Publisher.Name
             </td>
             <td>
-                @game.DeveloperStudio
+                @string.Join(", ", game.DeveloperStudio.Select(d => d.Name).ToList())
             </td>
             <td>
                 @(this.Html.ActionLink("Edit", "Edit", new { id=game.ID}))
