@@ -53,7 +53,6 @@ namespace DaLiExpress.Controllers
             DeveloperStudio oldDeveloperStudio = this.unitOfWork.DeveloperStudio.GetById(updateDeveloperStudio.ID);
             oldDeveloperStudio.Name = updateDeveloperStudio.Name;
             oldDeveloperStudio.Foundingdate = updateDeveloperStudio.Foundingdate;
-<<<<<<< Updated upstream
         }
 
         public ActionResult Delete(int id)
@@ -63,8 +62,6 @@ namespace DaLiExpress.Controllers
             this.unitOfWork.Complete();
             this.ViewBag.AllDeveloperStudios = this.unitOfWork.DeveloperStudio.GetAll();
             return View("Index");
-=======
->>>>>>> Stashed changes
         }
     }
 }
