@@ -3,90 +3,88 @@
 @using DaLiExpress.Validators
 @model Game
 @{
-    this.ViewBag.Title = "Edit";
-    
+    ViewBag.Title = "Edit";
 }
 <style type="text/css">.editor-field { }</style>
 
 <h2>Edit</h2>
 
-@using (this.Html.BeginForm())
+@using (Html.BeginForm())
 {
-    @(this.Html.ValidationSummary(
-                  true
-                  ))
-<fieldset>
-    <legend>
-        Game
-    </legend>
-    <div class="editor-label">
-        @(this.Html.LabelFor(model => model.Name))
-    </div>
-    <div class="editor-field">
-        @(this.Html.EditorFor(model => model.Name))
-        @(this.Html.ValidationMessageFor(model => model.Name))
-    </div>
-    <div class="editor-label">
-        @(this.Html.LabelFor(model => model.Rating))
-    </div>
-    <div class="editor-field">
-        @(this.Html.EditorFor(model => model.Rating))
-        @(this.Html.ValidationMessageFor(model => model.Rating))
-    </div>
-    <div class="editor-label">
-        @(this.Html.LabelFor(model => model.Release))
-    </div>
-    <div class="editor-field">
-        @Html.EditorFor(model => model.Release, new { Value = Model.Release })
-        @(this.Html.ValidationMessageFor(model => model.Release))
-    </div>
-    @(this.Html.LabelFor(model => model.Platform) )
-    <div class="checkbox-group required">
-        @foreach (Platform platform in ViewBag.Platforms)
-        {
-            bool boxIsChecked = Model.Platform.Contains(platform);
-            <div style="margin-left: -100px; transform: scale(0.75)">
-                <label>
-                    <input type="checkbox" value="@platform.ID" name="Platforms" checked="@boxIsChecked"/>
-                    @Html.DisplayFor(model => platform.Name)
-                </label>
-            </div>
-        }
+    @Html.ValidationSummary(
+        true
+        )
+    <fieldset>
+        <legend>
+            Game
+        </legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
         </div>
-    @(this.Html.LabelFor(model => model.DeveloperStudio) )
-    <div class="form-group">
-        @foreach (DeveloperStudio developerStudio in ViewBag.DeveloperStudios)
-        {
-            bool boxIsChecked = Model.DeveloperStudio.Contains(developerStudio);
-            <div style="margin-left: -100px; transform: scale(0.75)" >
-                <label>
-                    <input type="checkbox" value="@developerStudio.ID" name="DeveloperStudios" checked="@boxIsChecked"/>
-                    @Html.DisplayFor(model => developerStudio.Name)
-                </label>
-            </div>
-        }
-        @Html.ValidationMessageFor(model=>model.Platform)
-    </div>
-
-    <div class="editor-label">
-        @(this.Html.LabelFor(model => model.Publisher));
-    </div>
-    <div class="editor-field">
-        @(this.Html.DropDownListFor(model => model.Publisher.ID, (IEnumerable<SelectListItem>)ViewBag.Publishers))
-        @(this.Html.ValidationMessageFor(model => model.Publisher))
-    </div>
-    <p>
-        <br />
-        <input type="button" class="btn btn-default" value="Go Back" onclick="location.href = '@Url.Action("Index", "Home")'" />
-        <input type="submit" value="Save" class="btn btn-default" />
-    </p>
-    @if (ViewBag.Message != null)
-    {
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Rating)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Rating)
+            @Html.ValidationMessageFor(model => model.Rating)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Release)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Release, new {Value = Model.Release})
+            @Html.ValidationMessageFor(model => model.Release)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Publisher);
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Publisher.ID, (IEnumerable<SelectListItem>) ViewBag.Publishers)
+            @Html.ValidationMessageFor(model => model.Publisher)
+        </div>
+        @Html.LabelFor(model => model.Platform)
+        <div class="checkbox-group required">
+            @foreach (Platform platform in ViewBag.Platforms)
+            {
+                bool boxIsChecked = Model.Platform.Contains(platform);
+                <div style="margin-left: -100px; transform: scale(0.75)">
+                    <label>
+                        <input type="checkbox" value="@platform.ID" name="Platforms" checked="@boxIsChecked"/>
+                        @Html.DisplayFor(model => platform.Name)
+                    </label>
+                </div>
+            }
+        </div>
+        @Html.LabelFor(model => model.DeveloperStudio)
+        <div class="form-group">
+            @foreach (DeveloperStudio developerStudio in ViewBag.DeveloperStudios)
+            {
+                bool boxIsChecked = Model.DeveloperStudio.Contains(developerStudio);
+                <div style="margin-left: -100px; transform: scale(0.75)">
+                    <label>
+                        <input type="checkbox" value="@developerStudio.ID" name="DeveloperStudios" checked="@boxIsChecked"/>
+                        @Html.DisplayFor(model => developerStudio.Name)
+                    </label>
+                </div>
+            }
+            @Html.ValidationMessageFor(model => model.Platform)
+        </div>
         <p>
-            <b>@ViewBag.Message </b>
+            <br/>
+            <input type="button" class="btn btn-default" value="Go Back" onclick="location.href = '@Url.Action("Index", "Home")'"/>
+            <input type="submit" value="Save" class="btn btn-default"/>
         </p>
-    }
-</fieldset>
+        @if (ViewBag.Message != null)
+        {
+            <p>
+                <b>@ViewBag.Message </b>
+            </p>
+        }
+    </fieldset>
 }
 
 @section Scripts {@Scripts.Render("~/bundles/jqueryval")}

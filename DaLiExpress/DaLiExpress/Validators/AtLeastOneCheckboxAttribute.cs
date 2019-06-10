@@ -12,21 +12,21 @@ namespace DaLiExpress.Validators
 
         public AtLeastOneCheckboxAttribute(params string[] checkboxNames)
         {
-            _checkboxNames = checkboxNames;
+            this._checkboxNames = checkboxNames;
         }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var propertyInfos = value.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Where(x => _checkboxNames.Contains(x.Name));
+                .Where(x => this._checkboxNames.Contains(x.Name));
 
             var values = propertyInfos.Select(x => x.GetGetMethod().Invoke(value, null));
             if (values.Any(x => Convert.ToBoolean(x)))
                 return ValidationResult.Success;
             else
             {
-                ErrorMessage = "At least one checkbox must be selected";
-                return new ValidationResult(ErrorMessage);
+                this.ErrorMessage = "At least one checkbox must be selected";
+                return new ValidationResult(this.ErrorMessage);
             }
         }
     }

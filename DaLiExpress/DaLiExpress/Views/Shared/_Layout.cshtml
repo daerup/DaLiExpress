@@ -4,14 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@(this.ViewBag.Title) - DaLi GameExpress</title>
+    <title>@ViewBag.Title - DaLi GameExpress</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
 @Html.Partial("_NavBar")
 <div class="container body-content">
-    @(this.RenderBody())
+    @RenderBody()
     <hr/>
     <footer>
         <p>Copyright &copy; @DateTime.Now.Year - DaLi GameExpress</p>
@@ -20,6 +20,6 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
-@(this.RenderSection("scripts", required: false))
+@RenderSection("scripts", required: false)
 </body>
 </html>

@@ -25,35 +25,50 @@ namespace DaLiExpress.Controllers
         public ActionResult Edit(int id)
         {
             Game gameToEdit = this.unitOfWork.Game.GetById(id);
-            this.ViewBag.GameToEdit = gameToEdit;
-            this.ViewBag.Publishers = this.GetListOfPublishers(gameToEdit);
-            this.ViewBag.Platforms = unitOfWork.Platform.GetAll().ToList();
-            this.ViewBag.DeveloperStudios = unitOfWork.DeveloperStudio.GetAll().ToList();
+            this.PrepareViewBag(gameToEdit);
             return this.View(gameToEdit);
         }
 
         [HttpPost]
         public ActionResult Edit(Game editedGame, FormCollection collection)
         {
-            int[] platformIDs = Array.ConvertAll(collection["Platforms"].Split(','), int.Parse);
-            int[] developerStudios = Array.ConvertAll(collection["DeveloperStudios"].Split(','), int.Parse);
+            if (!collection.AllKeys.Contains("Platforms"))
+            {
+                this.ViewBag.Message = "Please select at least one Platform";
+                this.PrepareViewBag(editedGame);
+                return this.View(this.unitOfWork.Game.GetById(editedGame.ID));
+            }
+            if (!collection.AllKeys.Contains("DeveloperStudios"))
+            {
+                this.ViewBag.Message = "Please select at least one Developer studio";
+                this.PrepareViewBag(editedGame);
+                return this.View(this.unitOfWork.Game.GetById(editedGame.ID));
+            }
 
-            this.ViewBag.Message = "Gespeichert";
-            this.ViewBag.Publishers = this.GetListOfPublishers(editedGame);
-            this.ViewBag.Platforms = unitOfWork.Platform.GetAll();
-            this.ViewBag.DeveloperStudios = unitOfWork.DeveloperStudio.GetAll().ToList();
+            int[] platformIDs = Array.ConvertAll(collection["Platforms"].Split(','), int.Parse);
+            int[] developerStudioIDs = Array.ConvertAll(collection["DeveloperStudios"].Split(','), int.Parse);
+
             this.UpdateNonMtoMProperties(editedGame);
             this.UpdatePlatforms(editedGame, platformIDs);
-            this.UpdateDeveloperStudios(editedGame, developerStudios);
+            this.UpdateDeveloperStudios(editedGame, developerStudioIDs);
+            this.PrepareViewBag(editedGame);
             this.unitOfWork.Complete();
+            this.ViewBag.Message = "Gespeichert";
 
-            return this.View(unitOfWork.Game.GetById(editedGame.ID));
+            return this.View(this.unitOfWork.Game.GetById(editedGame.ID));
+        }
+
+        private void PrepareViewBag(Game game)
+        {
+            this.ViewBag.Publishers = this.GetListOfPublishers(game);
+            this.ViewBag.Platforms = this.unitOfWork.Platform.GetAll();
+            this.ViewBag.DeveloperStudios = this.unitOfWork.DeveloperStudio.GetAll().ToList();
         }
 
         public List<SelectListItem> GetListOfPublishers(Game gameToEdit)
         {
             List<SelectListItem> selectList = new List<SelectListItem>();
-            foreach (Publisher publisher in unitOfWork.Publisher.GetAll())
+            foreach (Publisher publisher in this.unitOfWork.Publisher.GetAll())
             {
                 selectList.Add(new SelectListItem()
                 {
@@ -68,7 +83,7 @@ namespace DaLiExpress.Controllers
         public List<SelectListItem> GetListOfDeveloperStudios(Game gameToEdit)
         {
             List<SelectListItem> selectList = new List<SelectListItem>();
-            foreach (DeveloperStudio developerStudio in unitOfWork.DeveloperStudio.GetAll())
+            foreach (DeveloperStudio developerStudio in this.unitOfWork.DeveloperStudio.GetAll())
             {
                 selectList.Add(new SelectListItem()
                 {
@@ -95,7 +110,7 @@ namespace DaLiExpress.Controllers
             oldGame.Platform.ToList().ForEach(p=>oldGame.Platform.Remove(p));
             foreach (int platformId in platforms)
             {
-                oldGame.Platform.Add(unitOfWork.Platform.GetById(platformId));
+                oldGame.Platform.Add(this.unitOfWork.Platform.GetById(platformId));
             }
         }
         private void UpdateDeveloperStudios(Game updatedGame, int[] developerStudios)
@@ -105,7 +120,7 @@ namespace DaLiExpress.Controllers
             oldGame.DeveloperStudio.ToList().ForEach(p=>oldGame.DeveloperStudio.Remove(p));
             foreach (int developerStudioId in developerStudios)
             {
-                oldGame.DeveloperStudio.Add(unitOfWork.DeveloperStudio.GetById(developerStudioId));
+                oldGame.DeveloperStudio.Add(this.unitOfWork.DeveloperStudio.GetById(developerStudioId));
             }
         }
 

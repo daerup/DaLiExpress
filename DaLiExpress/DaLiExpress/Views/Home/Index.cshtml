@@ -3,7 +3,7 @@
 @using Microsoft.Ajax.Utilities
 @model dynamic
 @{
-    this.ViewBag.Title = "Games";
+    ViewBag.Title = "Games";
 }
 <h2>DaLi GameExpress</h2>
 <table class ="table">
@@ -33,7 +33,7 @@
             Mutationen
         </th>
     </tr>
-    @foreach(Game game in this.ViewBag.AllGames) {
+    @foreach(Game game in ViewBag.AllGames) {
         <tr>
             <td>
                 @game.ID

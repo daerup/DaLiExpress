@@ -39,6 +39,7 @@ namespace DaLiExpress.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [DisplayName("Developer Studio")]
         public virtual ICollection<DeveloperStudio> DeveloperStudio { get; set; }
+        [DisplayName("Platforms")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Platform> Platform { get; set; }
     }

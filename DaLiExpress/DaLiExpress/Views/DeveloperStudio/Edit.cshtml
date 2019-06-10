@@ -1,14 +1,65 @@
-﻿@model dynamic
+﻿@using DaLiExpress.Models
+@model DaLiExpress.Models.DeveloperStudio
+@{
+    ViewBag.Title = "Edit";
 
-<!DOCTYPE html>
+}
+<style type="text/css">
+    .editor-field {
+    }
+</style>
 
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
-</div>
-</body>
-</html>
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(
+        true
+        )
+    <fieldset>
+        <legend>
+            Game
+        </legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Foundingdate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Foundingdate, new { Value = Model.Foundingdate })
+            @Html.ValidationMessageFor(model => model.Foundingdate)
+        </div>
+
+        @Html.LabelFor(model => model.Game)
+        <div class="form-group">
+            @foreach (Game game in ViewBag.Games)
+            {
+                bool boxIsChecked = Model.Game.Contains(game);
+                <div style="margin-left: -100px; transform: scale(0.75)">
+                    <label>
+                        <input type="checkbox" value="@game.ID" name="DeveloperStudios" checked="@boxIsChecked" />
+                        @Html.DisplayFor(model => game.Name)
+                    </label>
+                </div>
+            }
+        </div>
+        <p>
+            <br />
+            <input type="button" class="btn btn-default" value="Go Back" onclick="location.href = '@Url.Action("Index", "DeveloperStudio")'" />
+            <input type="submit" value="Save" class="btn btn-default" />
+        </p>
+        @if (ViewBag.Message != null)
+        {
+            <p>
+                <b>@ViewBag.Message </b>
+            </p>
+        }
+    </fieldset>
+}
+
+@section Scripts {@Scripts.Render("~/bundles/jqueryval")}

@@ -26,7 +26,7 @@ namespace DaLiExpress.Models
     
         public int ID { get; set; }
         public string Name { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public System.DateTime Foundingdate { get; set; }
     

@@ -6,13 +6,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @(this.Html.ActionLink("Games", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" }))
+            @Html.ActionLink("Games", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@(this.Html.ActionLink("Publishers", "Index", "Publisher"))</li>
-                <li>@(this.Html.ActionLink("Platforms", "Index", "Platform"))</li>
-                <li>@(this.Html.ActionLink("Developer Studios", "Index", "DeveloperStudio"))</li>
+                <li>@Html.ActionLink("Publishers", "Index", "Publisher")</li>
+                <li>@Html.ActionLink("Platforms", "Index", "Platform")</li>
+                <li>@Html.ActionLink("Developer Studios", "Index", "DeveloperStudio")</li>
             </ul>
         </div>
     </div>

@@ -23,7 +23,7 @@
             Mutationen
         </th>
     </tr>
-    @foreach(DeveloperStudio developerStudio in this.ViewBag.AllDeveloperStudios) {
+    @foreach(DeveloperStudio developerStudio in ViewBag.AllDeveloperStudios) {
         <tr>
             <td>
                 @developerStudio.ID
@@ -38,7 +38,7 @@
                 @string.Join(", ", developerStudio.Game.Select(d => d.Name).ToList())
             </td>
             <td>
-               @* @developerStudio.AverageRating*@
+                @(Math.Round((decimal)developerStudio.Game.ToList().Select(g => g.Rating).Sum() / (developerStudio.Game.Count), 2))
             </td>
             <td>
                 @(this.Html.ActionLink("Edit", "Edit", new { id=developerStudio.ID})) | 
