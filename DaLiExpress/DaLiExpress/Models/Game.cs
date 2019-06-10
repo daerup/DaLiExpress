@@ -30,7 +30,7 @@ namespace DaLiExpress.Models
         [Range(1, 100, ErrorMessage = "Please enter a Rating between 1 and 100")]
         public Nullable<int> Rating { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public System.DateTime Release { get; set; }
         public int PublisherID { get; set; }
