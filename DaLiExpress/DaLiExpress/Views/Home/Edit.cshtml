@@ -1,8 +1,10 @@
 ﻿@using System.Activities.Expressions
 @using DaLiExpress.Models
+@using DaLiExpress.Validators
 @model Game
 @{
     this.ViewBag.Title = "Edit";
+    
 }
 <style type="text/css">.editor-field { }</style>
 
@@ -45,7 +47,7 @@
             bool boxIsChecked = Model.Platform.Contains(platform);
             <div style="margin-left: -100px; transform: scale(0.75)">
                 <label>
-                    <input type="checkbox" value="@platform.ID" name="Platforms" checked="@boxIsChecked" />
+                    <input type="checkbox" value="@platform.ID" name="Platforms" checked="@boxIsChecked"/>
                     @Html.DisplayFor(model => platform.Name)
                 </label>
             </div>
@@ -63,6 +65,7 @@
                 </label>
             </div>
         }
+        @Html.ValidationMessageFor(model=>model.Platform)
     </div>
 
     <div class="editor-label">

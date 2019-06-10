@@ -1,0 +1,48 @@
+﻿@using DaLiExpress.Models
+@model dynamic
+
+<h2>Developer Studios</h2>
+<table class ="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Founding Date
+        </th>
+        <th>
+            Developed Games
+        </th>
+        <th>
+            Average Rating
+        </th>
+        <th>
+            Mutationen
+        </th>
+    </tr>
+    @foreach(DeveloperStudio developerStudio in this.ViewBag.AllDeveloperStudios) {
+        <tr>
+            <td>
+                @developerStudio.ID
+            </td>
+            <td>
+                @developerStudio.Name
+            </td>
+            <td>
+                @developerStudio.Foundingdate.ToShortDateString()
+            </td>
+            <td>
+                @string.Join(", ", developerStudio.Game.Select(d => d.Name).ToList())
+            </td>
+            <td>
+                @developerStudio.AverageRating
+            </td>
+            <td>
+                @(this.Html.ActionLink("Edit", "Edit", new { id=developerStudio.ID}))
+            </td>
+        </tr>
+    }
+</table>

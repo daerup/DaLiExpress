@@ -1,0 +1,49 @@
+﻿@using DaLiExpress.Models
+@model dynamic
+
+<!DOCTYPE html>
+<h2>Publishers</h2>
+<table class ="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Release Date
+        </th>
+        <th>
+            Published Games
+        </th>
+        <th>
+            Most Active Platform
+        </th>
+        <th>
+            Mutationen
+        </th>
+    </tr>
+    @foreach(Publisher publisher in this.ViewBag.AllPublishers) {
+        <tr>
+            <td>
+                @publisher.ID
+            </td>
+            <td>
+                @publisher.Name
+            </td>
+            <td>
+                @publisher.Foundingdate.ToShortDateString()            
+            </td>
+            <td>
+                @string.Join(", ", publisher.Game.Select(d => d.Name).ToList())
+            </td>            
+            <td>
+                @publisher.FavoritePlatform.Name
+            </td>
+            <td>
+                @(this.Html.ActionLink("Edit", "Edit", new { id=publisher.ID}))
+            </td>
+        </tr>
+    }
+</table>

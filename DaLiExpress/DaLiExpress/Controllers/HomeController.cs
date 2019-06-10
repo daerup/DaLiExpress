@@ -22,12 +22,6 @@ namespace DaLiExpress.Controllers
             return this.View();
         }
 
-        public ActionResult Game()
-        {
-            this.ViewBag.Message = "Your contact page.";
-            return this.View();
-        }
-
         public ActionResult Edit(int id)
         {
             Game gameToEdit = this.unitOfWork.Game.GetById(id);

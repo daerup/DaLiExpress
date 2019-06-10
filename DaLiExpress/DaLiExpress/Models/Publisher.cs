@@ -7,6 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using Microsoft.Ajax.Utilities;
+
 namespace DaLiExpress.Models
 {
     using System;
@@ -22,9 +26,13 @@ namespace DaLiExpress.Models
     
         public int ID { get; set; }
         public string Name { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public System.DateTime Foundingdate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game> Game { get; set; }
+
+        public Models.Platform FavoritePlatform => (Platform)Game.ToList().Select(g => g.Platform).ToList()[0];
     }
 }
