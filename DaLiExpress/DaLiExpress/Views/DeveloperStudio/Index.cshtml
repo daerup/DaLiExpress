@@ -41,9 +41,13 @@
                 @(Math.Round((decimal)developerStudio.Game.ToList().Select(g => g.Rating).Sum() / (developerStudio.Game.Count), 2))
             </td>
             <td>
+<<<<<<< Updated upstream
                 @(this.Html.ActionLink("Edit", "Edit", new { id=developerStudio.ID})) | 
                 @(this.Html.ActionLink("Delete", "Delete", new{ id=developerStudio.ID}))
 
+=======
+                @Html.ActionLink("Edit", "Edit", new { id=developerStudio.ID})
+>>>>>>> Stashed changes
             </td>
         </tr>
     }
