@@ -31,7 +31,5 @@ namespace DaLiExpress.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game> Game { get; set; }
-
-        public decimal AverageRating => System.Math.Round(((decimal) Game.ToList().Select(g=>g.Rating).Sum()/ (Game.Count)),2, MidpointRounding.AwayFromZero);
     }
 }

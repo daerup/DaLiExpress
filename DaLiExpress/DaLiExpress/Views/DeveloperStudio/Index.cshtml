@@ -38,10 +38,12 @@
                 @string.Join(", ", developerStudio.Game.Select(d => d.Name).ToList())
             </td>
             <td>
-                @developerStudio.AverageRating
+               @* @developerStudio.AverageRating*@
             </td>
             <td>
-                @(this.Html.ActionLink("Edit", "Edit", new { id=developerStudio.ID}))
+                @(this.Html.ActionLink("Edit", "Edit", new { id=developerStudio.ID})) | 
+                @(this.Html.ActionLink("Delete", "Delete", new{ id=developerStudio.ID}))
+
             </td>
         </tr>
     }

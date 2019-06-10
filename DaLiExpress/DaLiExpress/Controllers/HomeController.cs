@@ -111,10 +111,9 @@ namespace DaLiExpress.Controllers
 
         public ActionResult Delete(int id)
         {
-
             this.unitOfWork.Publisher.GetAll().ForEach(p => p.Game.Remove(this.unitOfWork.Game.GetById(id)));
             this.unitOfWork.Platform.GetAll().ForEach(p => p.Game.Remove(this.unitOfWork.Game.GetById(id)));
-            this.unitOfWork.DeveloperStudio.GetAll().ForEach(p => p.Game.Remove(this.unitOfWork.Game.GetById(id)));
+            this.unitOfWork.DeveloperStudio.GetAll().ForEach(d => d.Game.Remove(this.unitOfWork.Game.GetById(id)));
             this.unitOfWork.Game.Remove(this.unitOfWork.Game.GetById(id));
             this.unitOfWork.Complete();
             this.ViewBag.AllGames = this.unitOfWork.Game.GetAll();

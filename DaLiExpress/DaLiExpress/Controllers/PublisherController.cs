@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using DaLiExpress.Models;
 using DaLiExpress.UnitsOfWork;
+using Microsoft.Ajax.Utilities;
 
 namespace DaLiExpress.Controllers
 {
@@ -17,6 +19,15 @@ namespace DaLiExpress.Controllers
         public ActionResult Edit(int id)
         {
             return this.View();
+        }
+
+        public ActionResult Delete(int id)
+        {
+            this.unitOfWork.Game.GetAll().ToList().RemoveAll(g => g.PublisherID == id);
+            this.unitOfWork.Publisher.Remove(this.unitOfWork.Publisher.GetById(id));
+            this.unitOfWork.Complete();
+            this.ViewBag.AllPublishers = this.unitOfWork.Publisher.GetAll();
+            return View("Index");
         }
     }
 }

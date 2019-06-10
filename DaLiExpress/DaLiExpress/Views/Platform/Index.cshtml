@@ -38,7 +38,9 @@
                 }
             </td>
             <td>
-                @(this.Html.ActionLink("Edit", "Edit", new { id=platform.ID}))
+                @(this.Html.ActionLink("Edit", "Edit", new { id=platform.ID})) |
+                @(this.Html.ActionLink("Delete", "Delete", new{ id=platform.ID}))
+
             </td>
         </tr>
     }
