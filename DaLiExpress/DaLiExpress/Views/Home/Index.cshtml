@@ -57,12 +57,8 @@
                 @string.Join(", ", game.DeveloperStudio.Select(d => d.Name).ToList())
             </td>
             <td>
-<<<<<<< Updated upstream
                 @(this.Html.ActionLink("Edit", "Edit", new { id=game.ID})) |
                 @(this.Html.ActionLink("Delete", "Delete", new{ id=game.ID}))
-=======
-                @Html.ActionLink("Edit", "Edit", new { id=game.ID})
->>>>>>> Stashed changes
             </td>
         </tr>
     }
