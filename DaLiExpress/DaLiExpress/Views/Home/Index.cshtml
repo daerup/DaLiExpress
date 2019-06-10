@@ -1,3 +1,4 @@
+@using System.Drawing
 @using DaLiExpress.Models
 @using Microsoft.Ajax.Utilities
 @model dynamic
@@ -19,6 +20,9 @@
         </th>
         <th>
             Platform
+        </th>
+        <th>
+            Release Date
         </th>
         <th>
             Publisher
@@ -43,6 +47,9 @@
             </td>
             <td>
                 @string.Join(", ", game.Platform.Select(p => p.Name).ToList())
+            </td>
+            <td>
+                @game.Release.ToShortDateString()
             </td>
             <td>
                 @game.Publisher.Name
