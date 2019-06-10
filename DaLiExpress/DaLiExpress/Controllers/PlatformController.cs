@@ -19,5 +19,11 @@ namespace DaLiExpress.Controllers
             this.ViewBag.AllPlatforms = this.unitOfWork.Platform.GetAll();
             return this.View();
         }
+
+        public ActionResult Edit(int id)
+        {
+            return this.View();
+        }
+
     }
 }

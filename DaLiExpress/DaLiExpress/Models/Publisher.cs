@@ -32,7 +32,5 @@ namespace DaLiExpress.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Game> Game { get; set; }
-
-        public Models.Platform FavoritePlatform => (Platform)Game.ToList().Select(g => g.Platform).ToList()[0];
     }
 }

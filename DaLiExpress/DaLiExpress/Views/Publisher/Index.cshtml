@@ -1,4 +1,5 @@
 ﻿@using DaLiExpress.Models
+@using Microsoft.Ajax.Utilities
 @model dynamic
 
 <!DOCTYPE html>
@@ -36,10 +37,35 @@
                 @publisher.Foundingdate.ToShortDateString()            
             </td>
             <td>
-                @string.Join(", ", publisher.Game.Select(d => d.Name).ToList())
+                @{
+                    if (publisher.Game.Any())
+                    {
+                        @(string.Join(", ", publisher.Game.Select(d => d.Name).ToList()))
+                    }
+                    else
+                    {
+                        @("No games published yet")
+
+                    }
+                }
             </td>            
             <td>
-                @publisher.FavoritePlatform.Name
+                @{
+                    List<Platform> used = new List<Platform>();
+                    publisher.Game.ForEach(g=>g.Platform.ForEach(p=>used.Add(p)));
+                    if (used.Any())
+                    {
+                        int max = used.Count(plt => plt.Name.Equals(used.GroupBy(p => p).OrderByDescending(grp => grp.Count()).First().Key.Name));
+                        @(string.Join(", ", used.GroupBy(plt=>plt).Where(g=>g.Count()==max).SelectMany(grp=>grp).Select(p=>p.Name).ToList()));
+                    }
+                    else
+                    {
+                        @("No games published yet")
+                    }
+                    //var item = publisher.Game.GroupBy(g => g)
+                    //    .OrderByDescending(ss => ss.Count())
+                    //    .First().Key;
+                }
             </td>
             <td>
                 @(this.Html.ActionLink("Edit", "Edit", new { id=publisher.ID}))

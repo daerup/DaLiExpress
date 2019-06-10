@@ -17,7 +17,6 @@ namespace DaLiExpress.Controllers
         public ActionResult Edit(int id)
         {
             return this.View();
-
         }
     }
 }

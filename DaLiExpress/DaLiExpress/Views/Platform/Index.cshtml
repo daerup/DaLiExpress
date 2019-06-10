@@ -1,14 +1,45 @@
-﻿@model dynamic
+﻿@using DaLiExpress.Models
+@model dynamic
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>title</title>
-</head>
-<body>
-<div>
-      
-</div>
-</body>
-</html>
+<h2>Platform</h2>
+<table class ="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Available Games
+        </th>
+        <th>
+            Mutationen
+        </th>
+    </tr>
+    @foreach(Platform platform in this.ViewBag.AllPlatforms) {
+        <tr>
+            <td>
+                @platform.ID
+            </td>
+            <td>
+                @platform.Name
+            </td>
+            <td>
+                @{
+                    if (platform.Game.Any())
+                    {
+                        @(string.Join(", ", platform.Game.Select(d => d.Name).ToList()))
+                    }
+                    else
+                    {
+                        @("No games published yet")
+                    }
+                }
+            </td>
+            <td>
+                @(this.Html.ActionLink("Edit", "Edit", new { id=platform.ID}))
+            </td>
+        </tr>
+    }
+</table>
