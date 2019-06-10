@@ -34,13 +34,13 @@ namespace DaLiExpress.Controllers
         {
             if (!collection.AllKeys.Contains("Platforms"))
             {
-                this.ViewBag.Message = "Please select at least one Platform";
+                this.ViewBag.ErrorMessage = "Please select at least one Platform";
                 this.PrepareViewBag(editedGame);
                 return this.View(this.unitOfWork.Game.GetById(editedGame.ID));
             }
             if (!collection.AllKeys.Contains("DeveloperStudios"))
             {
-                this.ViewBag.Message = "Please select at least one Developer studio";
+                this.ViewBag.ErrorMessage = "Please select at least one Developer studio";
                 this.PrepareViewBag(editedGame);
                 return this.View(this.unitOfWork.Game.GetById(editedGame.ID));
             }
