@@ -22,6 +22,14 @@ namespace DaLiExpress.Controllers
             return this.View();
         }
 
+        [HttpPost]
+        public ActionResult Index(FormCollection collection)
+        {
+            this.ViewBag.AllGames = this.unitOfWork.Game.GetAll().Where(g=>g.Name.ToLower().Contains(collection["SearchedGame"].ToLower())).ToList();
+            this.ViewBag.SearchedGame = collection["SearchedGame"];
+            return this.View();
+        }
+
         public ActionResult Edit(int id)
         {
             Game gameToEdit = this.unitOfWork.Game.GetById(id);

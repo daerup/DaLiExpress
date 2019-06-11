@@ -17,6 +17,14 @@ namespace DaLiExpress.Controllers
             return this.View();
         }
 
+        [HttpPost]
+        public ActionResult Index(FormCollection collection)
+        {
+            this.ViewBag.AllDeveloperStudios = this.unitOfWork.DeveloperStudio.GetAll().Where(g => g.Name.ToLower().Contains(collection["SearchedDeveloper"].ToLower())).ToList();
+            this.ViewBag.SearchedDeveloper = collection["SearchedDeveloper"];
+            return this.View();
+        }
+
         public ActionResult Edit(int id)
         {
             DeveloperStudio studioToEdit = this.unitOfWork.DeveloperStudio.GetById(id);

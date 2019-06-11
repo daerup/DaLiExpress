@@ -16,6 +16,14 @@ namespace DaLiExpress.Controllers
             return this.View();
         }
 
+        [HttpPost]
+        public ActionResult Index(FormCollection collection)
+        {
+            this.ViewBag.AllPublishers = this.unitOfWork.Publisher.GetAll().Where(g => g.Name.ToLower().Contains(collection["SearchedPublisher"].ToLower())).ToList();
+            this.ViewBag.SearchedPublisher = collection["SearchedPublisher"];
+            return this.View();
+        }
+
         public ActionResult Edit(int id)
         {
             return this.View();

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+using System;
+using System.Linq;
 using System.Web.Mvc;
 using DaLiExpress.Models;
 using DaLiExpress.UnitsOfWork;
@@ -20,6 +19,16 @@ namespace DaLiExpress.Controllers
             this.ViewBag.AllPlatforms = this.unitOfWork.Platform.GetAll();
             return this.View();
         }
+
+
+        [HttpPost]
+        public ActionResult Index(FormCollection collection)
+        {
+            this.ViewBag.AllPlatforms = this.unitOfWork.Platform.GetAll().Where(g => g.Name.ToLower().Contains(collection["SearchedPlatforms"].ToLower())).ToList();
+            this.ViewBag.SearchedPlatforms = collection["SearchedPlatforms"];
+            return this.View();
+        }
+
 
         public ActionResult Edit(int id)
         {

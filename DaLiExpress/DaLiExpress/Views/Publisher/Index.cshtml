@@ -2,72 +2,88 @@
 @using Microsoft.Ajax.Utilities
 @model dynamic
 
-<!DOCTYPE html>
 <h2>Publishers</h2>
-<table class ="table">
-    <tr>
-        <th>
-            ID
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            Release Date
-        </th>
-        <th>
-            Published Games
-        </th>
-        <th>
-            Most Active Platform
-        </th>
-        <th>
-            Mutationen
-        </th>
-    </tr>
-    @foreach(Publisher publisher in ViewBag.AllPublishers) {
-        <tr>
-            <td>
-                @publisher.ID
-            </td>
-            <td>
-                @publisher.Name
-            </td>
-            <td>
-                @publisher.Foundingdate.ToShortDateString()            
-            </td>
-            <td>
-                @{
-                    if (publisher.Game.Any())
-                    {
-                        @(string.Join(", ", publisher.Game.Select(d => d.Name).ToList()))
-                    }
-                    else
-                    {
-                        @("No games published yet")
-                    }
-                }
-            </td>            
-            <td>
-                @{
-                    List<Platform> used = new List<Platform>();
-                    publisher.Game.ForEach(g=>g.Platform.ForEach(p=>used.Add(p)));
-                    if (used.Any())
-                    {
-                        int max = used.Count(plt => plt.Name.Equals(used.GroupBy(p => p).OrderByDescending(grp => grp.Count()).First().Key.Name));
-                        @(string.Join(", ", used.GroupBy(plt=>plt).Where(g=>g.Count()==max).SelectMany(grp=>grp).Select(p=>p.Name).ToList()));
-                    }
-                    else
-                    {
-                        @("No games published yet")
-                    }
 
-                }
-            </td>
-            <td>
-                @(this.Html.ActionLink("Edit", "Edit", new { id=publisher.ID})) |
-                @(this.Html.ActionLink("Delete", "Delete", new { id=publisher.ID}))
-            </td>
+@using (Html.BeginForm())
+{
+    <fieldset id="search-field">
+        <input type="text" name="SearchedPublisher" />
+        <input type="submit" value="Search" height="10" class="btn btn-default" id="search-btn" autofocus />
+    </fieldset>
+}
+
+@if (ViewBag.AllPublishers.Count == 0 == false)
+{
+    <table class="table">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Release Date
+            </th>
+            <th>
+                Published Games
+            </th>
+            <th>
+                Most Active Platform
+            </th>
+            <th>
+                Mutationen
+            </th>
         </tr>
-    }
-</table>
+        @foreach (Publisher publisher in ViewBag.AllPublishers)
+        {
+            <tr>
+                <td>
+                    @publisher.ID
+                </td>
+                <td>
+                    @publisher.Name
+                </td>
+                <td>
+                    @publisher.Foundingdate.ToShortDateString()
+                </td>
+                <td>
+                    @{
+                        if (publisher.Game.Any())
+                        {
+                            @(string.Join(", ", publisher.Game.Select(d => d.Name).ToList()))
+                        }
+                        else
+                        {
+                            @("No games published yet")
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        List<Platform> used = new List<Platform>();
+                        publisher.Game.ForEach(g => g.Platform.ForEach(p => used.Add(p)));
+                        if (used.Any())
+                        {
+                            int max = used.Count(plt => plt.Name.Equals(used.GroupBy(p => p).OrderByDescending(grp => grp.Count()).First().Key.Name));
+                            @(string.Join(", ", used.GroupBy(plt => plt).Where(g => g.Count() == max).SelectMany(grp => grp).Select(p => p.Name).ToList()));
+                        }
+                        else
+                        {
+                            @("No games published yet")
+                        }
+
+                    }
+                </td>
+                <td>
+                    @(this.Html.ActionLink("Edit", "Edit", new { id = publisher.ID })) |
+                    @(this.Html.ActionLink("Delete", "Delete", new { id = publisher.ID }))
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No results were found</p>
+}

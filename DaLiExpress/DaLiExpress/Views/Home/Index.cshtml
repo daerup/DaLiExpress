@@ -1,65 +1,80 @@
 @using System.Drawing
 @using DaLiExpress.Models
 @using Microsoft.Ajax.Utilities
-@model dynamic
+@model string
 @{
     ViewBag.Title = "Games";
 }
 <h2>DaLi GameExpress</h2>
-<table class ="table">
-    <tr>
-        <th>
-            ID
-        </th>
-        <th>
-            Name
-        </th>
-        <th>
-            Rating
-        </th>
-        <th>
-            Platform
-        </th>
-        <th>
-            Release Date
-        </th>
-        <th>
-            Publisher
-        </th>
-        <th>
-            Developer Studio
-        </th>
-        <th>
-            Mutationen
-        </th>
-    </tr>
-    @foreach(Game game in ViewBag.AllGames) {
+@using (Html.BeginForm())
+{
+    <fieldset id="search-field">
+        <input type="text" name="SearchedGame" />
+        <input type="submit" value="Search" height="10" class="btn btn-default" id="search-btn" autofocus/>
+    </fieldset>
+}
+@if (ViewBag.AllGames.Count == 0 == false)
+{
+    <table class="table">
         <tr>
-            <td>
-                @game.ID
-            </td>
-            <td>
-                @game.Name
-            </td>
-            <td>
-                @game.Rating
-            </td>
-            <td>
-                @string.Join(", ", game.Platform.Select(p => p.Name).ToList())
-            </td>
-            <td>
-                @game.Release.ToShortDateString()
-            </td>
-            <td>
-                @game.Publisher.Name
-            </td>
-            <td>
-                @string.Join(", ", game.DeveloperStudio.Select(d => d.Name).ToList())
-            </td>
-            <td>
-                @(this.Html.ActionLink("Edit", "Edit", new { id=game.ID})) |
-                @(this.Html.ActionLink("Delete", "Delete", new{ id=game.ID}))
-            </td>
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Rating
+            </th>
+            <th>
+                Platform
+            </th>
+            <th>
+                Release Date
+            </th>
+            <th>
+                Publisher
+            </th>
+            <th>
+                Developer Studio
+            </th>
+            <th>
+                Mutationen
+            </th>
         </tr>
-    }
-</table>
+        @foreach (Game game in  ViewBag.AllGames)
+        {
+            <tr>
+                <td>
+                    @game.ID
+                </td>
+                <td>
+                    @game.Name
+                </td>
+                <td>
+                    @game.Rating
+                </td>
+                <td>
+                    @string.Join(", ", game.Platform.Select(p => p.Name).ToList())
+                </td>
+                <td>
+                    @game.Release.ToShortDateString()
+                </td>
+                <td>
+                    @game.Publisher.Name
+                </td>
+                <td>
+                    @string.Join(", ", game.DeveloperStudio.Select(d => d.Name).ToList())
+                </td>
+                <td>
+                    @(this.Html.ActionLink("Edit", "Edit", new {id = game.ID})) |
+                    @(this.Html.ActionLink("Delete", "Delete", new {id = game.ID}))
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No results were found</p>
+}
