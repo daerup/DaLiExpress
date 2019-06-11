@@ -18,6 +18,11 @@ namespace DaLiExpress.Repositories
 
         public List<Game> GetHighestRatedGames()
         {
+            if (!this.daliGameExpressEntities.Game.Any())
+            {
+                return new List<Game>();
+            }
+
             int? highestRating = this.daliGameExpressEntities.Game.ToList().OrderByDescending(p => p.Rating).First().Rating;
             return this.daliGameExpressEntities.Game.ToList().Where(p => p.Rating.Equals(highestRating)).ToList().ToList();
         }

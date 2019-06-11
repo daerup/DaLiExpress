@@ -15,12 +15,22 @@ namespace DaLiExpress.Repositories
 
         public List<Platform> GetMostPopularPlatforms()
         {
+            if (!this.daliGameExpressEntities.Platform.Any())
+            {
+                return new List<Platform>();
+            }
+
             int mostPopular = this.daliGameExpressEntities.Platform.ToList().OrderByDescending(p => p.Game.Count).First().Game.Count;
             return this.daliGameExpressEntities.Platform.Where(p => p.Game.Count.Equals(mostPopular)).ToList();
         }
 
         public List<Platform> GetLeastPopularPlatforms()
         {
+            if (!this.daliGameExpressEntities.Platform.Any())
+            {
+                return new List<Platform>();
+            }
+
             int leastPopular = this.daliGameExpressEntities.Platform.ToList().OrderBy(p => p.Game.Count).First().Game.Count;
             return this.daliGameExpressEntities.Platform.ToList().Where(p => p.Game.Count.Equals(leastPopular)).ToList();
         }

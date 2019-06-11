@@ -18,6 +18,11 @@ namespace DaLiExpress.Repositories
 
         public List<Publisher> GetBestRatedPublishers()
         {
+            if (!this.daliGameExpressEntities.Publisher.Any())
+            {
+                return new List<Publisher>();
+            }
+
             Publisher publisher = this.daliGameExpressEntities.Publisher.ToList().OrderByDescending(this.GetAverageGameRating).First();
             int? highestAverageGameRating = this.GetAverageGameRating(publisher);
             return this.daliGameExpressEntities.Publisher.ToList().Where(p => this.GetAverageGameRating(p) >= highestAverageGameRating).ToList();
