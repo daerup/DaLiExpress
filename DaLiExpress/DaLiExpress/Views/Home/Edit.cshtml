@@ -59,6 +59,12 @@
                     </label>
                 </div>
             }
+            @if (ViewBag.ErrorMessagePlatform != null)
+            {
+                <p>
+                    <b style="color: red">@ViewBag.ErrorMessagePlatform </b>
+                </p>
+            }
         </div>
         @Html.LabelFor(model => model.DeveloperStudio)
         <div class="form-group">
@@ -72,8 +78,13 @@
                     </label>
                 </div>
             }
-            @Html.ValidationMessageFor(model => model.Platform)
-        </div>
+            @if (ViewBag.ErrorMessageDeveloperStudio != null)
+            {
+                <p>
+                    <b style="color: red">@ViewBag.ErrorMessageDeveloperStudio </b>
+                </p>
+            }
+            </div>
         <p>
             <br/>
             <input type="button" class="btn btn-default" value="Go Back" onclick="location.href = '@Url.Action("Index", "Home")'"/>
@@ -83,12 +94,6 @@
         {
             <p>
                 <b>@ViewBag.Message </b>
-            </p>
-        }
-        @if (ViewBag.ErrorMessage != null)
-        {
-            <p>
-                <b style="color: red">@ViewBag.ErrorMessage </b>
             </p>
         }
     </fieldset>

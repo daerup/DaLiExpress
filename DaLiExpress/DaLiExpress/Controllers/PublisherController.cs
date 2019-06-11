@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using DaLiExpress.Models;
 using DaLiExpress.UnitsOfWork;
@@ -26,7 +27,47 @@ namespace DaLiExpress.Controllers
 
         public ActionResult Edit(int id)
         {
-            return this.View();
+            Publisher platformToEdit = this.unitOfWork.Publisher.GetById(id);
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
+            return this.View(platformToEdit);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Publisher editedPublisher, FormCollection collection)
+        {
+            if (!collection.AllKeys.Contains("Games"))
+            {
+                this.ViewBag.ErrorMessage = "Please select at least one Game";
+            }
+            else
+            {
+                int[] gameIDs = Array.ConvertAll(collection["Games"].Split(','), int.Parse);
+                this.UpdateNonMtoMProperties(editedPublisher);
+                this.UpdateGames(editedPublisher, gameIDs);
+                this.unitOfWork.Complete();
+                this.ViewBag.Message = "Gespeichert";
+            }
+
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
+            return this.View(this.unitOfWork.Publisher.GetById(editedPublisher.ID));
+        }
+
+        private void UpdateGames(Publisher updatedPlatform, int[] games)
+        {
+            Publisher oldPlatform = this.unitOfWork.Publisher.GetById(updatedPlatform.ID);
+
+            oldPlatform.Game.ToList().ForEach(p => oldPlatform.Game.Remove(p));
+            foreach (int gameId in games)
+            {
+                oldPlatform.Game.Add(this.unitOfWork.Game.GetById(gameId));
+            }
+        }
+
+        private void UpdateNonMtoMProperties(Publisher updatedPlatform)
+        {
+            Publisher oldPublisher = this.unitOfWork.Publisher.GetById(updatedPlatform.ID);
+            oldPublisher.Name = updatedPlatform.Name;
+            oldPublisher.Foundingdate = updatedPlatform.Foundingdate;
         }
 
         public ActionResult Delete(int id)

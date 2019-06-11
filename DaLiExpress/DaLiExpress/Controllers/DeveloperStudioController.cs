@@ -35,19 +35,26 @@ namespace DaLiExpress.Controllers
         [HttpPost]
         public ActionResult Edit(DeveloperStudio editedStudio, FormCollection collection)
         {
-            int[] gameIDs = Array.ConvertAll(collection["DeveloperStudios"].Split(','), int.Parse);
-            this.UpdateNonMtoMProperties(editedStudio);
-            this.UpdatePlatforms(editedStudio, gameIDs);
-            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
-            this.unitOfWork.Complete();
-            this.ViewBag.Message = "Gespeichert";
+            if (!collection.AllKeys.Contains("Games"))
+            {
+                this.ViewBag.ErrorMessage = "Please select at least one Game";
+            }
+            else
+            {
+                int[] gameIDs = Array.ConvertAll(collection["Games"].Split(','), int.Parse);
+                this.UpdateNonMtoMProperties(editedStudio);
+                this.UpdateGames(editedStudio, gameIDs);
+                this.unitOfWork.Complete();
+                this.ViewBag.Message = "Gespeichert";
+            }
 
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
             return this.View(this.unitOfWork.DeveloperStudio.GetById(editedStudio.ID));
         }
 
-        private void UpdatePlatforms(DeveloperStudio updateDeveloperStudio, int[] games)
+        private void UpdateGames(DeveloperStudio updatedDeveloperStudio, int[] games)
         {
-            DeveloperStudio oldDeveloperStudio = this.unitOfWork.DeveloperStudio.GetById(updateDeveloperStudio.ID);
+            DeveloperStudio oldDeveloperStudio = this.unitOfWork.DeveloperStudio.GetById(updatedDeveloperStudio.ID);
 
             oldDeveloperStudio.Game.ToList().ForEach(p => oldDeveloperStudio.Game.Remove(p));
             foreach (int gameId in games)
@@ -56,11 +63,11 @@ namespace DaLiExpress.Controllers
             }
         }
 
-        private void UpdateNonMtoMProperties(DeveloperStudio updateDeveloperStudio)
+        private void UpdateNonMtoMProperties(DeveloperStudio updatedDeveloperStudio)
         {
-            DeveloperStudio oldDeveloperStudio = this.unitOfWork.DeveloperStudio.GetById(updateDeveloperStudio.ID);
-            oldDeveloperStudio.Name = updateDeveloperStudio.Name;
-            oldDeveloperStudio.Foundingdate = updateDeveloperStudio.Foundingdate;
+            DeveloperStudio oldDeveloperStudio = this.unitOfWork.DeveloperStudio.GetById(updatedDeveloperStudio.ID);
+            oldDeveloperStudio.Name = updatedDeveloperStudio.Name;
+            oldDeveloperStudio.Foundingdate = updatedDeveloperStudio.Foundingdate;
         }
 
         public ActionResult Delete(int id)

@@ -42,27 +42,25 @@ namespace DaLiExpress.Controllers
         {
             if (!collection.AllKeys.Contains("Platforms"))
             {
-                this.ViewBag.ErrorMessage = "Please select at least one Platform";
-                this.PrepareViewBag(editedGame);
-                return this.View(this.unitOfWork.Game.GetById(editedGame.ID));
+                this.ViewBag.ErrorMessagePlatform = "Please select at least one Platform";
             }
             if (!collection.AllKeys.Contains("DeveloperStudios"))
             {
-                this.ViewBag.ErrorMessage = "Please select at least one Developer studio";
-                this.PrepareViewBag(editedGame);
-                return this.View(this.unitOfWork.Game.GetById(editedGame.ID));
+                this.ViewBag.ErrorMessageDeveloperStudio = "Please select at least one Developer studio";
+            }
+            else
+            {
+                int[] platformIDs = Array.ConvertAll(collection["Platforms"].Split(','), int.Parse);
+                int[] developerStudioIDs = Array.ConvertAll(collection["DeveloperStudios"].Split(','), int.Parse);
+
+                this.UpdateNonMtoMProperties(editedGame);
+                this.UpdatePlatforms(editedGame, platformIDs);
+                this.UpdateDeveloperStudios(editedGame, developerStudioIDs);
+                this.unitOfWork.Complete();
+                this.ViewBag.Message = "Gespeichert";
             }
 
-            int[] platformIDs = Array.ConvertAll(collection["Platforms"].Split(','), int.Parse);
-            int[] developerStudioIDs = Array.ConvertAll(collection["DeveloperStudios"].Split(','), int.Parse);
-
-            this.UpdateNonMtoMProperties(editedGame);
-            this.UpdatePlatforms(editedGame, platformIDs);
-            this.UpdateDeveloperStudios(editedGame, developerStudioIDs);
             this.PrepareViewBag(editedGame);
-            this.unitOfWork.Complete();
-            this.ViewBag.Message = "Gespeichert";
-
             return this.View(this.unitOfWork.Game.GetById(editedGame.ID));
         }
 

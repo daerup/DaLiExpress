@@ -42,10 +42,16 @@
                 bool boxIsChecked = Model.Game.Contains(game);
                 <div style="margin-left: -100px; transform: scale(0.75)">
                     <label>
-                        <input type="checkbox" value="@game.ID" name="DeveloperStudios" checked="@boxIsChecked" />
+                        <input type="checkbox" value="@game.ID" name="Games" checked="@boxIsChecked" />
                         @Html.DisplayFor(model => game.Name)
                     </label>
                 </div>
+            }
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <p>
+                    <b style="color: red">@ViewBag.ErrorMessage</b>
+                </p>
             }
         </div>
         <p>

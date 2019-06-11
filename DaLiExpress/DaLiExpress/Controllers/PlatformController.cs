@@ -32,7 +32,46 @@ namespace DaLiExpress.Controllers
 
         public ActionResult Edit(int id)
         {
-            return this.View();
+            Platform platformToEdit = this.unitOfWork.Platform.GetById(id);
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
+            return this.View(platformToEdit);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Platform editedPlatform, FormCollection collection)
+        {
+            if (!collection.AllKeys.Contains("Games"))
+            {
+                this.ViewBag.ErrorMessage = "Please select at least one Game";
+            }
+            else
+            {
+                int[] gameIDs = Array.ConvertAll(collection["Games"].Split(','), int.Parse);
+                this.UpdateNonMtoMProperties(editedPlatform);
+                this.UpdateGames(editedPlatform, gameIDs);
+                this.unitOfWork.Complete();
+                this.ViewBag.Message = "Gespeichert";
+            }
+
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
+            return this.View(this.unitOfWork.Platform.GetById(editedPlatform.ID));
+        }
+
+        private void UpdateGames(Platform updatedPlatform, int[] games)
+        {
+            Platform oldPlatform = this.unitOfWork.Platform.GetById(updatedPlatform.ID);
+
+            oldPlatform.Game.ToList().ForEach(p => oldPlatform.Game.Remove(p));
+            foreach (int gameId in games)
+            {
+                oldPlatform.Game.Add(this.unitOfWork.Game.GetById(gameId));
+            }
+        }
+
+        private void UpdateNonMtoMProperties(Platform updatedPlatform)
+        {
+            Platform oldPlatform = this.unitOfWork.Platform.GetById(updatedPlatform.ID);
+            oldPlatform.Name = updatedPlatform.Name;
         }
 
         public ActionResult Delete(int id)
