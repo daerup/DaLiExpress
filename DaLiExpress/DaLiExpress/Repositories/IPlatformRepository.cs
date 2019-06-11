@@ -5,7 +5,7 @@ namespace DaLiExpress.Repositories
 {
     public interface IPlatformRepository : IRepositoryBase<Platform>
     {
-        IEnumerable<Platform> GetMostPopularPlatforms();
-        IEnumerable<Platform> GetLeastPopularPlatforms();
+        List<Platform> GetMostPopularPlatforms();
+        List<Platform> GetLeastPopularPlatforms();
     }
 }

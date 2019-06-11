@@ -9,7 +9,7 @@ namespace DaLiExpress.Controllers
 {
     public class PublisherController : Controller
     {
-        UnitOfWork unitOfWork = new UnitOfWork(new DaLi_GameExpressEntities());
+        private readonly UnitOfWork unitOfWork = new UnitOfWork(new DaLi_GameExpressEntities());
 
         public ActionResult Index()
         {
@@ -76,7 +76,7 @@ namespace DaLiExpress.Controllers
             this.unitOfWork.Publisher.Remove(this.unitOfWork.Publisher.GetById(id));
             this.unitOfWork.Complete();
             this.ViewBag.AllPublishers = this.unitOfWork.Publisher.GetAll();
-            return View("Index");
+            return this.View("Index");
         }
     }
 }

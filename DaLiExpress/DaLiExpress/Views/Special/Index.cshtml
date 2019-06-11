@@ -1,0 +1,27 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Special Page";
+}
+<h2>Ultra fancy  super rare special page</h2>
+<table class="table">
+    <tr>
+        <th>Best Rated Games</th>
+        <td>@(string.Join(", ", ViewBag.BestRatedGames))</td>
+    </tr>
+    <tr>
+        <th>Most Productive Developer Studio</th>
+        <td>@(string.Join(", ", ViewBag.MostProductiveStudio))</td>
+    </tr>
+    <tr>
+        <th>Most Lazy Developer Studio</th>
+        <td>@(string.Join(", ", ViewBag.LeastProductiveStudio))</td>
+    </tr>
+    <tr>
+        <th>Most Popular Platforms</th>
+        <td>@(string.Join(", ", ViewBag.MostPopularPlatforms))</td>
+    </tr>
+    <tr>
+        <th>Least Popular Platforms</th>
+        <td>@(string.Join(", ", ViewBag.LeastPopularPlatforms))</td>
+    </tr>
+</table>

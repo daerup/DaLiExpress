@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using DaLiExpress.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace DaLiExpress.Repositories
 {
@@ -14,17 +16,20 @@ namespace DaLiExpress.Repositories
             this.daliGameExpressEntities = context;
         }
 
-        public IEnumerable<Publisher> GetBestRatedPublishers()
+        public List<Publisher> GetBestRatedPublishers()
         {
-            Publisher publisher = this.daliGameExpressEntities.Publisher.OrderBy(p => this.GetAverageGameRating(p))
-                .First();
+            Publisher publisher = this.daliGameExpressEntities.Publisher.ToList().OrderByDescending(this.GetAverageGameRating).First();
             int? highestAverageGameRating = this.GetAverageGameRating(publisher);
-            return this.daliGameExpressEntities.Publisher.Where(p =>
-                this.GetAverageGameRating(p) >= highestAverageGameRating);
+            return this.daliGameExpressEntities.Publisher.ToList().Where(p => this.GetAverageGameRating(p) >= highestAverageGameRating).ToList();
         }
 
         private int? GetAverageGameRating(Publisher publisher)
         {
+            if (publisher.Game == null || publisher.Game.Count == 0)
+            {
+                return 0;
+            }
+
             return publisher.Game.Sum(g => g.Rating) / publisher.Game.Count;
         }
     }

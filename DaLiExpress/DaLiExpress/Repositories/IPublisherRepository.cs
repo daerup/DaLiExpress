@@ -5,6 +5,6 @@ namespace DaLiExpress.Repositories
 {
     public interface IPublisherRepository : IRepositoryBase<Publisher>
     {
-        IEnumerable<Publisher> GetBestRatedPublishers();
+        List<Publisher> GetBestRatedPublishers();
     }
 }

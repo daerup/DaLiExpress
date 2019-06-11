@@ -5,7 +5,7 @@ namespace DaLiExpress.Repositories
 {
     public interface IGameRepository : IRepositoryBase<Game>
     {
-        IEnumerable<Game> GetHighestRatedGames(int numberOfGamesToReceive);
+        List<Game> GetHighestRatedGames();
         Game GetRandomGame();
     }
 }

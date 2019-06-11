@@ -28,12 +28,12 @@ namespace DaLiExpress.Models
         public int ID { get; set; }
         public string Name { get; set; }
         [Range(1, 100, ErrorMessage = "Please enter a Rating between 1 and 100")]
-        public Nullable<int> Rating { get; set; }
+        public int Rating { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public System.DateTime Release { get; set; }
-        public int PublisherID { get; set; }
+        public Nullable<int> PublisherID { get; set; }
     
         public virtual Publisher Publisher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

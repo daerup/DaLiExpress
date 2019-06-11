@@ -1,6 +1,9 @@
 ﻿@using DaLiExpress.Models
 @using Microsoft.Ajax.Utilities
 @model dynamic
+@{
+    ViewBag.Title = "Publishers";
+}
 
 <h2>Publishers</h2>
 
@@ -16,37 +19,19 @@
 {
     <table class="table">
         <tr>
-            <th>
-                ID
-            </th>
-            <th>
-                Name
-            </th>
-            <th>
-                Release Date
-            </th>  
-            <th>
-                Published Games
-            </th>
-            <th>
-                Most Active Platform
-            </th>
-            <th>
-                Mutationen
-            </th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Release Date</th>
+            <th>Published Games</th>
+            <th>Most Active Platform</th>
+            <th>Mutationen</th>
         </tr>
         @foreach (Publisher publisher in ViewBag.AllPublishers)
         {
             <tr>
-                <td>
-                    @publisher.ID
-                </td>
-                <td>
-                    @publisher.Name
-                </td>
-                <td>
-                    @publisher.Foundingdate.ToShortDateString()
-                </td>
+                <td>@publisher.ID</td>
+                <td>@publisher.Name</td>
+                <td>@publisher.Foundingdate.ToShortDateString()</td>
                 <td>
                     @{
                         if (publisher.Game.Any())

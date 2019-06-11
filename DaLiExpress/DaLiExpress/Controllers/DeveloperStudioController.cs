@@ -9,7 +9,7 @@ namespace DaLiExpress.Controllers
 {
     public class DeveloperStudioController : Controller
     {
-        UnitOfWork unitOfWork = new UnitOfWork(new DaLi_GameExpressEntities());
+        private readonly UnitOfWork unitOfWork = new UnitOfWork(new DaLi_GameExpressEntities());
 
         public ActionResult Index()
         {
