@@ -100,6 +100,7 @@ namespace DaLiExpress.Controllers
                 platformIDs.ForEach(id => newGame.Platform.Add(this.unitOfWork.Platform.GetById(id)));
                 developerStudioIDs.ForEach(id => newGame.DeveloperStudio.Add(this.unitOfWork.DeveloperStudio.GetById(id)));
                 this.unitOfWork.Game.Add(newGame);
+                this.unitOfWork.Complete();
                 this.ViewBag.Message = "Game was created";
             }
 
