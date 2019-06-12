@@ -38,8 +38,7 @@
                 <td>@(game.PublisherID == null ? "Game is not published yet" : game.Publisher.Name)</td>
                 <td>@(string.Join(", ", game.DeveloperStudio.Select(d => d.Name).ToList()) == string.Empty ? "Game is not developed yet" : string.Join(", ", game.DeveloperStudio.Select(p => p.Name).ToList()))</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = game.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = game.ID })
+                    @Html.ActionLink("Edit", "Edit", new { id = game.ID }) | @Html.ActionLink("Delete", "Delete", new { id = game.ID })
                 </td>
             </tr>
         }

@@ -25,7 +25,10 @@ namespace DaLiExpress.Models
         }
     
         public int ID { get; set; }
+
+        [Required(ErrorMessage = "A name is required, please enter one...")]
         public string Name { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public System.DateTime Foundingdate { get; set; }

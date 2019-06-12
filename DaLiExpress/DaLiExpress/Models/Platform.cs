@@ -6,6 +6,8 @@
 //     Manuelle Änderungen an dieser Datei werden überschrieben, wenn der Code neu generiert wird.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace DaLiExpress.Models
 {
@@ -21,6 +23,8 @@ namespace DaLiExpress.Models
         }
     
         public int ID { get; set; }
+
+        [Required(ErrorMessage = "A name is required, please enter one...")]
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

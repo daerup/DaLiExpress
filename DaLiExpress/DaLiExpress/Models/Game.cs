@@ -26,19 +26,23 @@ namespace DaLiExpress.Models
         }
     
         public int ID { get; set; }
+        [Required(ErrorMessage = "A name is required, please enter one...")]
         public string Name { get; set; }
         [Range(1, 100, ErrorMessage = "Please enter a Rating between 1 and 100")]
         public int Rating { get; set; }
 
+        [Required(ErrorMessage = "A release date is required, please enter one...")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public System.DateTime Release { get; set; }
         public Nullable<int> PublisherID { get; set; }
-    
+
+        [DisplayName("Publishers")]
         public virtual Publisher Publisher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [DisplayName("Developer Studio")]
         public virtual ICollection<DeveloperStudio> DeveloperStudio { get; set; }
+
         [DisplayName("Platforms")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Platform> Platform { get; set; }
