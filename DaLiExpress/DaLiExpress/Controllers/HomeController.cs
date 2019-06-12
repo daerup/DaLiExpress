@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web.Mvc;
 using DaLiExpress.Models;
@@ -39,7 +40,7 @@ namespace DaLiExpress.Controllers
         {
             if (!collection.AllKeys.Contains("Platforms"))
             {
-                this.ModelState.AddModelError("Platform", "Please select at least one Platform");
+                this.ViewBag.ErrorMessagePlatform = "Please select at least one Platform";
             }
             if (!collection.AllKeys.Contains("DeveloperStudios"))
             {
@@ -94,10 +95,11 @@ namespace DaLiExpress.Controllers
                 int[] platformIDs = Array.ConvertAll(collection["Platforms"].Split(','), int.Parse);
                 int[] developerStudioIDs = Array.ConvertAll(collection["DeveloperStudios"].Split(','), int.Parse);
 
+                newGame.PublisherID = newGame.Publisher.ID;
+                newGame.Publisher = null;
                 platformIDs.ForEach(id => newGame.Platform.Add(this.unitOfWork.Platform.GetById(id)));
                 developerStudioIDs.ForEach(id => newGame.DeveloperStudio.Add(this.unitOfWork.DeveloperStudio.GetById(id)));
                 this.unitOfWork.Game.Add(newGame);
-                this.unitOfWork.Complete();
                 this.ViewBag.Message = "Game was created";
             }
 

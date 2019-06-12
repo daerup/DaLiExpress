@@ -39,7 +39,7 @@
             @Html.LabelFor(model => model.Publisher);
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.Publisher.ID, (IEnumerable<SelectListItem>) ViewBag.Publishers)
+            @Html.DropDownListFor(model => model.Publisher.ID, (IEnumerable<SelectListItem>)ViewBag.Publishers)
             @Html.ValidationMessageFor(model => model.Publisher)
         </div>
         @Html.LabelFor(model => model.Platform)
