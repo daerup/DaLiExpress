@@ -3,45 +3,46 @@
 @{
     ViewBag.Title = "Developer Studios";
 }
-    <h2>Developer Studios</h2>
+<h2>Developer Studios</h2>
 
-    @using (Html.BeginForm())
-    {
-        <fieldset id="search-field">
-            <input type="text" name="SearchedDeveloper" />
-            <input type="submit" value="Search" height="10" class="btn btn-default" id="search-btn" autofocus />
-        </fieldset>
-    }
-@(this.Html.ActionLink("Create", "Create"))
+@using (Html.BeginForm())
+{
+    <fieldset id="search-field">
+        <input type="text" name="SearchedDeveloper" />
+        <input type="submit" value="Search" height="10" class="btn btn-default" id="search-btn" autofocus />
+    </fieldset>
+}
+@Html.ActionLink("Create", "Create")
 
-    @if (ViewBag.AllDeveloperStudios.Count == 0 == false)
-    {
-        <table class="table">
+
+@if (ViewBag.AllDeveloperStudios.Count == 0 == false)
+{
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Founding Date</th>
+            <th>Developed Games</th>
+            <th>Average Rating</th>
+            <th>Mutationen</th>
+        </tr>
+        @foreach (DeveloperStudio developerStudio in ViewBag.AllDeveloperStudios)
+        {
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Founding Date</th>
-                <th>Developed Games</th>
-                <th>Average Rating</th>
-                <th>Mutationen</th>
+                <td>@developerStudio.ID</td>
+                <td>@developerStudio.Name</td>
+                <td>@developerStudio.Foundingdate.ToShortDateString()</td>
+                <td>@string.Join(", ", developerStudio.Game.Select(d => d.Name).ToList())</td>
+                <td>@(Math.Round((decimal)developerStudio.Game.ToList().Select(g => g.Rating).Sum() / (developerStudio.Game.Count), 2))</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = developerStudio.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = developerStudio.ID })
+                </td>
             </tr>
-            @foreach (DeveloperStudio developerStudio in ViewBag.AllDeveloperStudios)
-            {
-                <tr>
-                    <td>@developerStudio.ID</td>
-                    <td>@developerStudio.Name</td>
-                    <td>@developerStudio.Foundingdate.ToShortDateString()</td>
-                    <td>@string.Join(", ", developerStudio.Game.Select(d => d.Name).ToList())</td>
-                    <td>@(Math.Round((decimal)developerStudio.Game.ToList().Select(g => g.Rating).Sum() / (developerStudio.Game.Count), 2))</td>
-                    <td>
-                        @(this.Html.ActionLink("Edit", "Edit", new {id = developerStudio.ID})) |
-                        @(this.Html.ActionLink("Delete", "Delete", new {id = developerStudio.ID}))
-                    </td>
-                </tr>
-            }
-        </table>
-    }
-    else
-    {
-        <p>No developer studios were found :(</p>
-    }
+        }
+    </table>
+}
+else
+{
+    <p>No developer studios were found :(</p>
+}

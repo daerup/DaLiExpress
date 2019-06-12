@@ -12,7 +12,8 @@
         <input type="submit" value="Search" height="10" class="btn btn-default" id="search-btn" autofocus />
     </fieldset>
 }
-@(this.Html.ActionLink("Create", "Create"))
+
+@Html.ActionLink("Create", "Create")
 
 @if (ViewBag.AllPlatforms.Count == 0 == false)
 {
@@ -41,8 +42,8 @@
                 }
             </td>
             <td>
-                @(this.Html.ActionLink("Edit", "Edit", new { id = platform.ID })) |
-                @(this.Html.ActionLink("Delete", "Delete", new { id = platform.ID }))
+                @Html.ActionLink("Edit", "Edit", new { id = platform.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = platform.ID })
             </td>
         </tr>
     }

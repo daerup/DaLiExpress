@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Web.Mvc;
-using System.Web.WebPages.Html;
 using DaLiExpress.Models;
-using DaLiExpress.Repositories;
 using DaLiExpress.UnitsOfWork;
 using Microsoft.Ajax.Utilities;
 using SelectListItem = System.Web.Mvc.SelectListItem;
@@ -33,7 +30,7 @@ namespace DaLiExpress.Controllers
         public ActionResult Edit(int id)
         {
             Game gameToEdit = this.unitOfWork.Game.GetById(id);
-            this.PrepareViewBag(gameToEdit);
+            this.PrepareViewBag();
             return this.View(gameToEdit);
         }
 
@@ -60,18 +57,62 @@ namespace DaLiExpress.Controllers
                 this.ViewBag.Message = "Saved";
             }
 
-            this.PrepareViewBag(editedGame);
+            this.PrepareViewBag();
             return this.View(this.unitOfWork.Game.GetById(editedGame.ID));
         }
 
-        private void PrepareViewBag(Game game)
+        public ActionResult Delete(int id)
         {
-            this.ViewBag.Publishers = this.GetListOfPublishers(game);
+            this.unitOfWork.Publisher.GetAll().ForEach(p => p.Game.Remove(this.unitOfWork.Game.GetById(id)));
+            this.unitOfWork.Platform.GetAll().ForEach(p => p.Game.Remove(this.unitOfWork.Game.GetById(id)));
+            this.unitOfWork.DeveloperStudio.GetAll().ForEach(d => d.Game.Remove(this.unitOfWork.Game.GetById(id)));
+            this.unitOfWork.Game.Remove(this.unitOfWork.Game.GetById(id));
+            this.unitOfWork.Complete();
+            this.ViewBag.AllGames = this.unitOfWork.Game.GetAll();
+            return this.View("Index");
+        }
+
+        public ActionResult Create()
+        {
+            this.PrepareViewBag();
+            return this.View(new Game { Release = DateTime.Today });
+        }
+
+        [HttpPost]
+        public ActionResult Create(Game newGame, FormCollection collection)
+        {
+            if (!collection.AllKeys.Contains("Platforms"))
+            {
+                this.ViewBag.ErrorMessagePlatform = "Please select at least one Platform";
+            }
+            if (!collection.AllKeys.Contains("DeveloperStudios"))
+            {
+                this.ViewBag.ErrorMessageDeveloperStudio = "Please select at least one Developer studio";
+            }
+            else
+            {
+                int[] platformIDs = Array.ConvertAll(collection["Platforms"].Split(','), int.Parse);
+                int[] developerStudioIDs = Array.ConvertAll(collection["DeveloperStudios"].Split(','), int.Parse);
+
+                platformIDs.ForEach(id => newGame.Platform.Add(this.unitOfWork.Platform.GetById(id)));
+                developerStudioIDs.ForEach(id => newGame.DeveloperStudio.Add(this.unitOfWork.DeveloperStudio.GetById(id)));
+                this.unitOfWork.Game.Add(newGame);
+                this.unitOfWork.Complete();
+                this.ViewBag.Message = "Game was created";
+            }
+
+            this.PrepareViewBag();
+            return this.View(this.unitOfWork.Game.GetById(newGame.ID));
+        }
+
+        private void PrepareViewBag()
+        {
+            this.ViewBag.Publishers = this.GetListOfPublishers();
             this.ViewBag.Platforms = this.unitOfWork.Platform.GetAll();
             this.ViewBag.DeveloperStudios = this.unitOfWork.DeveloperStudio.GetAll().ToList();
         }
 
-        public List<SelectListItem> GetListOfPublishers(Game gameToEdit)
+        public List<SelectListItem> GetListOfPublishers()
         {
             List<SelectListItem> selectList = new List<SelectListItem>();
             foreach (Publisher publisher in this.unitOfWork.Publisher.GetAll())
@@ -99,7 +140,6 @@ namespace DaLiExpress.Controllers
             }
             return selectList;
         }
-
         private void UpdateNonMtoMProperties(Game updatedGame)
         {
             Game oldGame = this.unitOfWork.Game.GetById(updatedGame.ID);
@@ -128,17 +168,6 @@ namespace DaLiExpress.Controllers
             {
                 oldGame.DeveloperStudio.Add(this.unitOfWork.DeveloperStudio.GetById(developerStudioId));
             }
-        }
-
-        public ActionResult Delete(int id)
-        {
-            this.unitOfWork.Publisher.GetAll().ForEach(p => p.Game.Remove(this.unitOfWork.Game.GetById(id)));
-            this.unitOfWork.Platform.GetAll().ForEach(p => p.Game.Remove(this.unitOfWork.Game.GetById(id)));
-            this.unitOfWork.DeveloperStudio.GetAll().ForEach(d => d.Game.Remove(this.unitOfWork.Game.GetById(id)));
-            this.unitOfWork.Game.Remove(this.unitOfWork.Game.GetById(id));
-            this.unitOfWork.Complete();
-            this.ViewBag.AllGames = this.unitOfWork.Game.GetAll();
-            return View("Index");
         }
     }
 }

@@ -52,6 +52,40 @@ namespace DaLiExpress.Controllers
             return this.View(this.unitOfWork.Publisher.GetById(editedPublisher.ID));
         }
 
+        public ActionResult Delete(int id)
+        {
+            this.unitOfWork.Game.GetAll().ToList().RemoveAll(g => g.PublisherID == id);
+            this.unitOfWork.Publisher.Remove(this.unitOfWork.Publisher.GetById(id));
+            this.unitOfWork.Complete();
+            this.ViewBag.AllPublishers = this.unitOfWork.Publisher.GetAll();
+            return this.View("Index");
+        }
+        public ActionResult Create()
+        {
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
+            return this.View(new Publisher { Foundingdate = DateTime.Today });
+        }
+
+        [HttpPost]
+        public ActionResult Create(Publisher newPublisher, FormCollection collection)
+        {
+            if (!collection.AllKeys.Contains("Games"))
+            {
+                this.ViewBag.ErrorMessage = "Please select at least one Game";
+            }
+            else
+            {
+                int[] gameIDs = Array.ConvertAll(collection["Games"].Split(','), int.Parse);
+                gameIDs.ForEach(id => newPublisher.Game.Add(this.unitOfWork.Game.GetById(id)));
+                this.unitOfWork.Publisher.Add(newPublisher);
+                this.unitOfWork.Complete();
+                this.ViewBag.Message = "Publisher was created";
+            }
+
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
+            return this.View(this.unitOfWork.Publisher.GetById(newPublisher.ID));
+        }
+
         private void UpdateGames(Publisher updatedPlatform, int[] games)
         {
             Publisher oldPlatform = this.unitOfWork.Publisher.GetById(updatedPlatform.ID);
@@ -70,13 +104,5 @@ namespace DaLiExpress.Controllers
             oldPublisher.Foundingdate = updatedPlatform.Foundingdate;
         }
 
-        public ActionResult Delete(int id)
-        {
-            this.unitOfWork.Game.GetAll().ToList().RemoveAll(g => g.PublisherID == id);
-            this.unitOfWork.Publisher.Remove(this.unitOfWork.Publisher.GetById(id));
-            this.unitOfWork.Complete();
-            this.ViewBag.AllPublishers = this.unitOfWork.Publisher.GetAll();
-            return this.View("Index");
-        }
     }
 }

@@ -255,6 +255,8 @@
     <Content Include="Views\Special\Index.cshtml" />
     <Content Include="Views\DeveloperStudio\Create.cshtml" />
     <Content Include="Views\Platform\Create.cshtml" />
+    <Content Include="Views\Publisher\Create.cshtml" />
+    <Content Include="Views\Home\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

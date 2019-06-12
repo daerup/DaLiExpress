@@ -1,9 +1,14 @@
 ﻿@using DaLiExpress.Models
-@model DaLiExpress.Models.Platform
+@model DaLiExpress.Models.Publisher
 @{
     ViewBag.Title = "Create";
 
 }
+<style type="text/css">
+    .editor-field {
+    }
+</style>
+
 <h2>Create</h2>
 
 @using (Html.BeginForm())
@@ -22,6 +27,13 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Foundingdate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Foundingdate, new { Value = Model.Foundingdate })
+            @Html.ValidationMessageFor(model => model.Foundingdate)
+        </div>
 
         @Html.LabelFor(model => model.Game)
         <div class="form-group">
@@ -38,13 +50,13 @@
             @if (ViewBag.ErrorMessage != null)
             {
                 <p>
-                    <b style="color: red">@ViewBag.ErrorMessage </b>
+                    <b style="color: red">@ViewBag.ErrorMessage</b>
                 </p>
             }
         </div>
         <p>
             <br />
-            <input type="button" class="btn btn-default" value="Go Back" onclick="location.href = '@Url.Action("Index", "Platform")'" />
+            <input type="button" class="btn btn-default" value="Go Back" onclick="location.href = '@Url.Action("Index", "DeveloperStudio")'" />
             <input type="submit" value="Save" class="btn btn-default" />
         </p>
         @if (ViewBag.Message != null)

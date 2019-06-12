@@ -1,6 +1,4 @@
-@using System.Drawing
 @using DaLiExpress.Models
-@using Microsoft.Ajax.Utilities
 @model string
 @{
     ViewBag.Title = "Games";
@@ -10,9 +8,12 @@
 {
     <fieldset id="search-field">
         <input type="text" name="SearchedGame" />
-        <input type="submit" value="Search" height="10" class="btn btn-default" id="search-btn" autofocus/>
+        <input type="submit" value="Search" height="10" class="btn btn-default" id="search-btn" autofocus />
     </fieldset>
 }
+
+@Html.ActionLink("Create", "Create")
+
 @if (ViewBag.AllGames.Count == 0 == false)
 {
     <table class="table">
@@ -26,7 +27,7 @@
             <th>Developer Studio</th>
             <th>Mutationen</th>
         </tr>
-        @foreach (Game game in  ViewBag.AllGames)
+        @foreach (Game game in ViewBag.AllGames)
         {
             <tr>
                 <td>@game.ID</td>
@@ -71,8 +72,8 @@
                     }
                 </td>
                 <td>
-                    @(this.Html.ActionLink("Edit", "Edit", new {id = game.ID})) |
-                    @(this.Html.ActionLink("Delete", "Delete", new {id = game.ID}))
+                    @Html.ActionLink("Edit", "Edit", new { id = game.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = game.ID })
                 </td>
             </tr>
         }

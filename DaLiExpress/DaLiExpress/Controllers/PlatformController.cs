@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System;
 using System.Linq;
 using System.Web.Mvc;
 using DaLiExpress.Models;
@@ -20,7 +17,6 @@ namespace DaLiExpress.Controllers
             return this.View();
         }
 
-
         [HttpPost]
         public ActionResult Index(FormCollection collection)
         {
@@ -28,7 +24,6 @@ namespace DaLiExpress.Controllers
             this.ViewBag.SearchedPlatforms = collection["SearchedPlatforms"];
             return this.View();
         }
-
 
         public ActionResult Edit(int id)
         {
@@ -68,19 +63,13 @@ namespace DaLiExpress.Controllers
             }
         }
 
-        private void UpdateNonMtoMProperties(Platform updatedPlatform)
-        {
-            Platform oldPlatform = this.unitOfWork.Platform.GetById(updatedPlatform.ID);
-            oldPlatform.Name = updatedPlatform.Name;
-        }
-
         public ActionResult Delete(int id)
         {
             this.unitOfWork.Game.GetAll().ForEach(g => g.Platform.Remove(this.unitOfWork.Platform.GetById(id)));
             this.unitOfWork.Platform.Remove(this.unitOfWork.Platform.GetById(id));
             this.unitOfWork.Complete();
             this.ViewBag.AllPlatforms = this.unitOfWork.Platform.GetAll();
-            return View("Index");
+            return this.View("Index");
         }
 
         public ActionResult Create()
@@ -98,7 +87,6 @@ namespace DaLiExpress.Controllers
             }
             else
             {
-
                 int[] gameIDs = Array.ConvertAll(collection["Games"].Split(','), int.Parse);
                 gameIDs.ForEach(id => newPlatform.Game.Add(this.unitOfWork.Game.GetById(id)));
                 this.unitOfWork.Platform.Add(newPlatform);
@@ -108,6 +96,12 @@ namespace DaLiExpress.Controllers
 
             this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
             return this.View(this.unitOfWork.Platform.GetById(newPlatform.ID));
+        }
+
+        private void UpdateNonMtoMProperties(Platform updatedPlatform)
+        {
+            Platform oldPlatform = this.unitOfWork.Platform.GetById(updatedPlatform.ID);
+            oldPlatform.Name = updatedPlatform.Name;
         }
     }
 }

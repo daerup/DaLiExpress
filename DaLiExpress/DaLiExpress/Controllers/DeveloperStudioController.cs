@@ -52,31 +52,13 @@ namespace DaLiExpress.Controllers
             return this.View(this.unitOfWork.DeveloperStudio.GetById(editedStudio.ID));
         }
 
-        private void UpdateGames(DeveloperStudio updatedDeveloperStudio, int[] games)
-        {
-            DeveloperStudio oldDeveloperStudio = this.unitOfWork.DeveloperStudio.GetById(updatedDeveloperStudio.ID);
-
-            oldDeveloperStudio.Game.ToList().ForEach(p => oldDeveloperStudio.Game.Remove(p));
-            foreach (int gameId in games)
-            {
-                oldDeveloperStudio.Game.Add(this.unitOfWork.Game.GetById(gameId));
-            }
-        }
-
-        private void UpdateNonMtoMProperties(DeveloperStudio updatedDeveloperStudio)
-        {
-            DeveloperStudio oldDeveloperStudio = this.unitOfWork.DeveloperStudio.GetById(updatedDeveloperStudio.ID);
-            oldDeveloperStudio.Name = updatedDeveloperStudio.Name;
-            oldDeveloperStudio.Foundingdate = updatedDeveloperStudio.Foundingdate;
-        }
-
         public ActionResult Delete(int id)
         {
             this.unitOfWork.Game.GetAll().ForEach(g => g.DeveloperStudio.Remove(this.unitOfWork.DeveloperStudio.GetById(id)));
             this.unitOfWork.DeveloperStudio.Remove(this.unitOfWork.DeveloperStudio.GetById(id));
             this.unitOfWork.Complete();
             this.ViewBag.AllDeveloperStudios = this.unitOfWork.DeveloperStudio.GetAll();
-            return View("Index");
+            return this.View("Index");
         }
 
         public ActionResult Create()
@@ -105,5 +87,24 @@ namespace DaLiExpress.Controllers
             this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
             return this.View(this.unitOfWork.DeveloperStudio.GetById(newStudio.ID));
         }
+
+        private void UpdateGames(DeveloperStudio updatedDeveloperStudio, int[] games)
+        {
+            DeveloperStudio oldDeveloperStudio = this.unitOfWork.DeveloperStudio.GetById(updatedDeveloperStudio.ID);
+
+            oldDeveloperStudio.Game.ToList().ForEach(p => oldDeveloperStudio.Game.Remove(p));
+            foreach (int gameId in games)
+            {
+                oldDeveloperStudio.Game.Add(this.unitOfWork.Game.GetById(gameId));
+            }
+        }
+
+        private void UpdateNonMtoMProperties(DeveloperStudio updatedDeveloperStudio)
+        {
+            DeveloperStudio oldDeveloperStudio = this.unitOfWork.DeveloperStudio.GetById(updatedDeveloperStudio.ID);
+            oldDeveloperStudio.Name = updatedDeveloperStudio.Name;
+            oldDeveloperStudio.Foundingdate = updatedDeveloperStudio.Foundingdate;
+        }
+
     }
 }

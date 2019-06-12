@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
 using DaLiExpress.Models;
-using Microsoft.Ajax.Utilities;
 
 namespace DaLiExpress.Repositories
 {

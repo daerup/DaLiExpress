@@ -1,6 +1,4 @@
-﻿@using System.Activities.Expressions
-@using DaLiExpress.Models
-@using DaLiExpress.Validators
+﻿@using DaLiExpress.Models
 @model Game
 @{
     ViewBag.Title = "Edit";
@@ -48,7 +46,7 @@
             @Html.ValidationMessageFor(model => model.Publisher)
         </div>
         @Html.LabelFor(model => model.Platform)
-        <div class="checkbox-group required">
+        <div>
             @foreach (Platform platform in ViewBag.Platforms)
             {
                 bool boxIsChecked = Model.Platform.Contains(platform);
