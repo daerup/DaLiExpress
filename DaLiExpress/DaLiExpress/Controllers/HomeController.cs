@@ -86,7 +86,7 @@ namespace DaLiExpress.Controllers
             {
                 this.ViewBag.ErrorMessagePlatform = "Please select at least one Platform";
             }
-            if (!collection.AllKeys.Contains("DeveloperStudios"))
+            else if (!collection.AllKeys.Contains("DeveloperStudios"))
             {
                 this.ViewBag.ErrorMessageDeveloperStudio = "Please select at least one Developer studio";
             }
@@ -102,10 +102,11 @@ namespace DaLiExpress.Controllers
                 this.unitOfWork.Game.Add(newGame);
                 this.unitOfWork.Complete();
                 this.ViewBag.Message = "Game was created";
+
             }
 
             this.PrepareViewBag();
-            return this.View(this.unitOfWork.Game.GetById(newGame.ID));
+            return this.View(newGame);
         }
 
         private void PrepareViewBag()
