@@ -39,7 +39,7 @@ namespace DaLiExpress.Controllers
         {
             if (!collection.AllKeys.Contains("Platforms"))
             {
-                this.ViewBag.ErrorMessagePlatform = "Please select at least one Platform";
+                this.ModelState.AddModelError("Platform", "Please select at least one Platform");
             }
             if (!collection.AllKeys.Contains("DeveloperStudios"))
             {
