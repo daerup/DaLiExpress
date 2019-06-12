@@ -8,8 +8,8 @@
 @using (Html.BeginForm())
 {
     <fieldset id="search-field">
-        <input type="text" name="SearchedDeveloper" />
-        <input type="submit" value="Search" height="10" class="btn btn-default" id="search-btn" autofocus />
+        <input type="text" name="SearchedDeveloper"/>
+        <input type="submit" value="Search" height="10" class="btn btn-default" id="search-btn" autofocus/>
     </fieldset>
 }
 @Html.ActionLink("Create", "Create")
@@ -23,7 +23,7 @@
             <th>Founding Date</th>
             <th>Developed Games</th>
             <th>Average Rating</th>
-            <th>Mutationen</th>
+            <th>Mutations</th>
         </tr>
         @foreach (DeveloperStudio developerStudio in ViewBag.AllDeveloperStudios)
         {
@@ -34,8 +34,7 @@
                 <td>@string.Join(", ", developerStudio.Game.Select(d => d.Name).ToList())</td>
                 <td>@(developerStudio.Game.ToList().Count == 0 ? "No rating here :(" : (Math.Round((decimal)developerStudio.Game.ToList().Select(g => g.Rating).Sum() / (developerStudio.Game.Count), 2)).ToString())</td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = developerStudio.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = developerStudio.ID })
+                    @Html.ActionLink("Edit", "Edit", new { id = developerStudio.ID }) | @Html.ActionLink("Delete", "Delete", new { id = developerStudio.ID })
                 </td>
             </tr>
         }

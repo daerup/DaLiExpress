@@ -31,8 +31,7 @@
                 <td>@platform.Name</td>
                 <td>@(string.Join(", ", platform.Game.Select(g => g.Name).ToList()) == string.Empty ? "No games published one this platform yet" : (string.Join(", ", platform.Game.Select(d => d.Name).ToList())))</td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = platform.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = platform.ID })
+                @Html.ActionLink("Edit", "Edit", new { id = platform.ID }) | @Html.ActionLink("Delete", "Delete", new { id = platform.ID })
             </td>
         </tr>
     }
