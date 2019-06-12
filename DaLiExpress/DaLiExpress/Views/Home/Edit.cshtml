@@ -49,17 +49,12 @@
                 bool boxIsChecked = Model.Platform.Contains(platform);
                 <div style="margin-left: -100px; transform: scale(0.75)">
                     <label>
-                        <input type="checkbox" value="@platform.ID" name="Platforms" checked="@boxIsChecked"/>
+                        <input type="checkbox" value="@platform.ID" name="Platforms" checked="@boxIsChecked" />
                         @Html.DisplayFor(model => platform.Name)
                     </label>
                 </div>
             }
-            @if (ViewBag.ErrorMessagePlatform != null)
-            {
-                <p>
-                    <b style="color: red">@ViewBag.ErrorMessagePlatform </b>
-                </p>
-            }
+            @Html.ValidationMessageFor(model => model.Platform)
         </div>
         @Html.LabelFor(model => model.DeveloperStudio)
         <div class="form-group">
@@ -68,18 +63,14 @@
                 bool boxIsChecked = Model.DeveloperStudio.Contains(developerStudio);
                 <div style="margin-left: -100px; transform: scale(0.75)">
                     <label>
-                        <input type="checkbox" value="@developerStudio.ID" name="DeveloperStudios" checked="@boxIsChecked"/>
+                        <input type="checkbox" value="@developerStudio.ID" name="DeveloperStudios" checked="@boxIsChecked" />
                         @Html.DisplayFor(model => developerStudio.Name)
                     </label>
                 </div>
             }
-            @if (ViewBag.ErrorMessageDeveloperStudio != null)
-            {
-                <p>
-                    <b style="color: red">@ViewBag.ErrorMessageDeveloperStudio </b>
-                </p>
-            }
-            </div>
+            @Html.ValidationMessageFor(model => model.DeveloperStudio)
+
+        </div>
         <p>
             <br/>
             <input type="button" class="btn btn-default" value="Go Back" onclick="location.href = '@Url.Action("Index", "Home")'"/>

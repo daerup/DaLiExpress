@@ -37,7 +37,7 @@ namespace DaLiExpress.Controllers
         {
             if (!collection.AllKeys.Contains("Games"))
             {
-                this.ViewBag.ErrorMessage = "Please select at least one Game";
+                this.ModelState.AddModelError("Game", "Please select at least one Game");
             }
             else
             {
@@ -83,7 +83,7 @@ namespace DaLiExpress.Controllers
         {
             if (!collection.AllKeys.Contains("Games"))
             {
-                this.ViewBag.ErrorMessage = "Please select at least one Game";
+                this.ModelState.AddModelError("Game", "Please select at least one Game");
             }
             else
             {
@@ -95,7 +95,7 @@ namespace DaLiExpress.Controllers
             }
 
             this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
-            return this.View(this.unitOfWork.Platform.GetById(newPlatform.ID));
+            return this.View(newPlatform);
         }
 
         private void UpdateNonMtoMProperties(Platform updatedPlatform)

@@ -40,11 +40,11 @@ namespace DaLiExpress.Controllers
         {
             if (!collection.AllKeys.Contains("Platforms"))
             {
-                this.ViewBag.ErrorMessagePlatform = "Please select at least one Platform";
+                this.ModelState.AddModelError("Platform", "Please select at least one Platform");
             }
-            if (!collection.AllKeys.Contains("DeveloperStudios"))
+            else if (!collection.AllKeys.Contains("DeveloperStudios"))
             {
-                this.ViewBag.ErrorMessageDeveloperStudio = "Please select at least one Developer studio";
+                this.ModelState.AddModelError("DeveloperStudio", "Please select at least one Developer studio");
             }
             else
             {
@@ -84,11 +84,11 @@ namespace DaLiExpress.Controllers
         {
             if (!collection.AllKeys.Contains("Platforms"))
             {
-                this.ViewBag.ErrorMessagePlatform = "Please select at least one Platform";
+                this.ModelState.AddModelError("Platform", "Please select at least one Platform");
             }
             else if (!collection.AllKeys.Contains("DeveloperStudios"))
             {
-                this.ViewBag.ErrorMessageDeveloperStudio = "Please select at least one Developer studio";
+                this.ModelState.AddModelError("DeveloperStudio", "Please select at least one Developer studio");
             }
             else
             {

@@ -33,12 +33,8 @@
                     </label>
                 </div>
             }
-            @if (ViewBag.ErrorMessage != null)
-            {
-                <p>
-                    <b style="color: red">@ViewBag.ErrorMessage </b>
-                </p>
-            }
+            @Html.ValidationMessageFor(model => model.Game)
+
         </div>
         <p>
             <br />

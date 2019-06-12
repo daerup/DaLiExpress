@@ -37,7 +37,7 @@ namespace DaLiExpress.Controllers
         {
             if (!collection.AllKeys.Contains("Games"))
             {
-                this.ViewBag.ErrorMessage = "Please select at least one Game";
+                this.ModelState.AddModelError("Game", "Please select at least one Game");
             }
             else
             {
@@ -72,11 +72,10 @@ namespace DaLiExpress.Controllers
         {
             if (!collection.AllKeys.Contains("Games"))
             {
-                this.ViewBag.ErrorMessage = "Please select at least one Game";
+                this.ModelState.AddModelError("Game", "Please select at least one Game");
             }
             else
             {
-
                 int[] gameIDs = Array.ConvertAll(collection["Games"].Split(','), int.Parse);
                 gameIDs.ForEach(id=>newStudio.Game.Add(this.unitOfWork.Game.GetById(id)));
                 this.unitOfWork.DeveloperStudio.Add(newStudio);
@@ -85,7 +84,7 @@ namespace DaLiExpress.Controllers
             }
 
             this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
-            return this.View(this.unitOfWork.DeveloperStudio.GetById(newStudio.ID));
+            return this.View(newStudio);
         }
 
         private void UpdateGames(DeveloperStudio updatedDeveloperStudio, int[] games)

@@ -57,12 +57,8 @@
                     </label>
                 </div>
             }
-            @if (ViewBag.ErrorMessagePlatform != null)
-            {
-                <p>
-                    <b style="color: red">@ViewBag.ErrorMessagePlatform </b>
-                </p>
-            }
+            @Html.ValidationMessageFor(model => model.Platform)
+
         </div>
         @Html.LabelFor(model => model.DeveloperStudio)
         <div class="form-group">
@@ -76,12 +72,8 @@
                     </label>
                 </div>
             }
-            @if (ViewBag.ErrorMessageDeveloperStudio != null)
-            {
-                <p>
-                    <b style="color: red">@ViewBag.ErrorMessageDeveloperStudio </b>
-                </p>
-            }
+            @Html.ValidationMessageFor(model => model.DeveloperStudio)
+
         </div>
         <p>
             <br />
