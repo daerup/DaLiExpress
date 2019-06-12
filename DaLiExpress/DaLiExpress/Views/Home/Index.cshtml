@@ -21,11 +21,11 @@
             <th>ID</th>
             <th>Name</th>
             <th>Rating</th>
-            <th>Platform</th>
             <th>Release Date</th>
+            <th>Platform</th>
             <th>Publisher</th>
             <th>Developer Studio</th>
-            <th>Mutationen</th>
+            <th>Mutations</th>
         </tr>
         @foreach (Game game in ViewBag.AllGames)
         {
@@ -33,44 +33,10 @@
                 <td>@game.ID</td>
                 <td>@game.Name</td>
                 <td>@game.Rating</td>
-                <td>
-                    @{
-                        if (game.Platform.Any())
-                        {
-                            @(string.Join(", ", game.Platform.Select(p => p.Name).ToList()))
-                        }
-                        else
-                        {
-                            @("Game is not released on a platform yet")
-                        }
-                    }
-                </td>
                 <td>@game.Release.ToShortDateString()</td>
-                <td>
-                    @{
-                        if (game.PublisherID != null)
-                        {
-                            @(game.Publisher.Name)
-                        }
-                        else
-                        {
-                            @("Game is not published yet")
-                        }
-                    }
-                </td>
-                <td>
-                    @{
-                        if (game.DeveloperStudio.Any())
-                        {
-                            @(string.Join(", ", game.DeveloperStudio.Select(d => d.Name).ToList()))
-                        }
-                        else
-                        {
-                            @("Game is not developed yet")
-
-                        }
-                    }
-                </td>
+                <td>@(string.Join(", ", game.Platform.Select(p => p.Name).ToList()) == string.Empty ? "Game is not released on a platform yet" : (string.Join(", ", game.Platform.Select(p => p.Name).ToList())))</td>
+                <td>@(game.PublisherID == null ? "Game is not published yet" : game.Publisher.Name)</td>
+                <td>@(string.Join(", ", game.DeveloperStudio.Select(d => d.Name).ToList()) == string.Empty ? "Game is not developed yet" : string.Join(", ", game.DeveloperStudio.Select(p => p.Name).ToList()))</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = game.ID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = game.ID })

@@ -14,7 +14,6 @@
 }
 @Html.ActionLink("Create", "Create")
 
-
 @if (ViewBag.AllDeveloperStudios.Count == 0 == false)
 {
     <table class="table">
@@ -33,7 +32,7 @@
                 <td>@developerStudio.Name</td>
                 <td>@developerStudio.Foundingdate.ToShortDateString()</td>
                 <td>@string.Join(", ", developerStudio.Game.Select(d => d.Name).ToList())</td>
-                <td>@(Math.Round((decimal)developerStudio.Game.ToList().Select(g => g.Rating).Sum() / (developerStudio.Game.Count), 2))</td>
+                <td>@(developerStudio.Game.ToList().Count == 0 ? "No rating here :(" : (Math.Round((decimal)developerStudio.Game.ToList().Select(g => g.Rating).Sum() / (developerStudio.Game.Count), 2)).ToString())</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = developerStudio.ID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = developerStudio.ID })

@@ -22,25 +22,14 @@
             <th>ID</th>
             <th>Name</th>
             <th>Available Games</th>
-            <th>Mutationen</th>
+            <th>Mutations</th>
         </tr>
         @foreach (Platform platform in ViewBag.AllPlatforms)
         {
             <tr>
                 <td>@platform.ID</td>
                 <td>@platform.Name</td>
-                <td>
-                    @{
-                        if (platform.Game.Any())
-                        {
-                            @(string.Join(", ", platform.Game.Select(d => d.Name).ToList()))
-                        }
-                        else
-                        {
-                            @("No games published yet")
-                        }
-                }
-            </td>
+                <td>@(string.Join(", ", platform.Game.Select(g => g.Name).ToList()) == string.Empty ? "No games published one this platform yet" : (string.Join(", ", platform.Game.Select(d => d.Name).ToList())))</td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = platform.ID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = platform.ID })

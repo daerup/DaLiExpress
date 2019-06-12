@@ -27,7 +27,7 @@ namespace DaLiExpress.Repositories
 
         public Game GetRandomGame()
         {
-            return this.daliGameExpressEntities.Game.ToList().ElementAt(new Random().Next(this.daliGameExpressEntities.Game.Count()));
+            return !this.daliGameExpressEntities.Game.Any() ? null : this.daliGameExpressEntities.Game.ToList().ElementAt(new Random().Next(this.daliGameExpressEntities.Game.Count()));
         }
     }
 }

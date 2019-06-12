@@ -140,6 +140,7 @@ namespace DaLiExpress.Controllers
             }
             return selectList;
         }
+
         private void UpdateNonMtoMProperties(Game updatedGame)
         {
             Game oldGame = this.unitOfWork.Game.GetById(updatedGame.ID);
@@ -159,6 +160,7 @@ namespace DaLiExpress.Controllers
                 oldGame.Platform.Add(this.unitOfWork.Platform.GetById(platformId));
             }
         }
+
         private void UpdateDeveloperStudios(Game updatedGame, int[] developerStudios)
         {
             Game oldGame = this.unitOfWork.Game.GetById(updatedGame.ID);

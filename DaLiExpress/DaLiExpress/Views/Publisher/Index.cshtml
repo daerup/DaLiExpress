@@ -21,12 +21,13 @@
 {
     <table class="table">
         <tr>
+
             <th>ID</th>
             <th>Name</th>
             <th>Release Date</th>
             <th>Published Games</th>
             <th>Most Active Platform</th>
-            <th>Mutationen</th>
+            <th>Mutations</th>
         </tr>
         @foreach (Publisher publisher in ViewBag.AllPublishers)
         {
@@ -34,18 +35,7 @@
                 <td>@publisher.ID</td>
                 <td>@publisher.Name</td>
                 <td>@publisher.Foundingdate.ToShortDateString()</td>
-                <td>
-                    @{
-                        if (publisher.Game.Any())
-                        {
-                            @(string.Join(", ", publisher.Game.Select(d => d.Name).ToList()))
-                        }
-                        else
-                        {
-                            @("No games published yet")
-                        }
-                    }
-                </td>
+                <td>@(string.Join(", ", publisher.Game.Select(g => g.Name).ToList()) == string.Empty ? "No games published yet" : (string.Join(", ", publisher.Game.Select(d => d.Name).ToList())))</td>
                 <td>
                     @{
                         List<Platform> used = new List<Platform>();
@@ -59,7 +49,6 @@
                         {
                             @("No games published yet")
                         }
-
                     }
                 </td>
                 <td>
