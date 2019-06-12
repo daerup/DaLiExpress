@@ -131,20 +131,6 @@ namespace DaLiExpress.Controllers
             return selectList;
         }
 
-        public List<SelectListItem> GetListOfDeveloperStudios(Game gameToEdit)
-        {
-            List<SelectListItem> selectList = new List<SelectListItem>();
-            foreach (DeveloperStudio developerStudio in this.unitOfWork.DeveloperStudio.GetAll())
-            {
-                selectList.Add(new SelectListItem()
-                {
-                    Value = developerStudio.ID.ToString(),
-                    Text = developerStudio.Name
-                });
-            }
-            return selectList;
-        }
-
         private void UpdateNonMtoMProperties(Game updatedGame)
         {
             Game oldGame = this.unitOfWork.Game.GetById(updatedGame.ID);
