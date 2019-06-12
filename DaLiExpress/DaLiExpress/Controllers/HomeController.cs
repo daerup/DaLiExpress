@@ -57,7 +57,7 @@ namespace DaLiExpress.Controllers
                 this.UpdatePlatforms(editedGame, platformIDs);
                 this.UpdateDeveloperStudios(editedGame, developerStudioIDs);
                 this.unitOfWork.Complete();
-                this.ViewBag.Message = "Gespeichert";
+                this.ViewBag.Message = "Saved";
             }
 
             this.PrepareViewBag(editedGame);

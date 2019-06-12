@@ -6,22 +6,24 @@
 <table class="table">
     <tr>
         <th>Best Rated Games</th>
-        <td>@(string.Join(", ", ViewBag.BestRatedGames))</td>
+        <td>@(string.Join(", ", ViewBag.BestRatedGames) == string.Empty ? "There are not enough games to determine the best rated game" : string.Join(", ", ViewBag.BestRatedGames) )</td>
+
     </tr>
     <tr>
         <th>Most Productive Developer Studio</th>
-        <td>@(string.Join(", ", ViewBag.MostProductiveStudio))</td>
+        <td>@(string.Join(", ", ViewBag.MostProductiveStudio) == string.Empty ? "There are not enough developer studios to determine the most productive one" : string.Join(", ", ViewBag.MostProductiveStudio) )</td>
+
     </tr>
     <tr>
         <th>Most Lazy Developer Studio</th>
-        <td>@(string.Join(", ", ViewBag.LeastProductiveStudio))</td>
+        <td>@(string.Join(", ", ViewBag.LeastProductiveStudio) == string.Empty ? "There are not enough developer studios to determine the most productive one" : string.Join(", ", ViewBag.LeastProductiveStudio) )</td>
     </tr>
     <tr>
         <th>Most Popular Platforms</th>
-        <td>@(string.Join(", ", ViewBag.MostPopularPlatforms))</td>
+        <td>@(string.Join(", ", ViewBag.MostPopularPlatforms) == string.Empty ? "There are not enough games & platform to determine the most popular" : string.Join(", ", ViewBag.MostPopularPlatforms) )</td>
     </tr>
     <tr>
         <th>Least Popular Platforms</th>
-        <td>@(string.Join(", ", ViewBag.LeastPopularPlatforms))</td>
+        <td>@(string.Join(", ", ViewBag.LeastPopularPlatforms) == string.Empty ? "There are not enough games & platform to determine the least popular" : string.Join(", ", ViewBag.LeastPopularPlatforms) )</td>
     </tr>
 </table>

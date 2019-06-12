@@ -45,7 +45,7 @@ namespace DaLiExpress.Controllers
                 this.UpdateNonMtoMProperties(editedStudio);
                 this.UpdateGames(editedStudio, gameIDs);
                 this.unitOfWork.Complete();
-                this.ViewBag.Message = "Gespeichert";
+                this.ViewBag.Message = "Saved";
             }
 
             this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
@@ -77,6 +77,33 @@ namespace DaLiExpress.Controllers
             this.unitOfWork.Complete();
             this.ViewBag.AllDeveloperStudios = this.unitOfWork.DeveloperStudio.GetAll();
             return View("Index");
+        }
+
+        public ActionResult Create()
+        {
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
+            return this.View(new DeveloperStudio{Foundingdate = DateTime.Today});
+        }
+
+        [HttpPost]
+        public ActionResult Create(DeveloperStudio newStudio, FormCollection collection)
+        {
+            if (!collection.AllKeys.Contains("Games"))
+            {
+                this.ViewBag.ErrorMessage = "Please select at least one Game";
+            }
+            else
+            {
+
+                int[] gameIDs = Array.ConvertAll(collection["Games"].Split(','), int.Parse);
+                gameIDs.ForEach(id=>newStudio.Game.Add(this.unitOfWork.Game.GetById(id)));
+                this.unitOfWork.DeveloperStudio.Add(newStudio);
+                this.unitOfWork.Complete();
+                this.ViewBag.Message = "Developer Studio was created";
+            }
+
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
+            return this.View(this.unitOfWork.DeveloperStudio.GetById(newStudio.ID));
         }
     }
 }

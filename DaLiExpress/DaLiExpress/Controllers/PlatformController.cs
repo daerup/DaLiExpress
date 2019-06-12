@@ -50,7 +50,7 @@ namespace DaLiExpress.Controllers
                 this.UpdateNonMtoMProperties(editedPlatform);
                 this.UpdateGames(editedPlatform, gameIDs);
                 this.unitOfWork.Complete();
-                this.ViewBag.Message = "Gespeichert";
+                this.ViewBag.Message = "Saved";
             }
 
             this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
@@ -81,7 +81,33 @@ namespace DaLiExpress.Controllers
             this.unitOfWork.Complete();
             this.ViewBag.AllPlatforms = this.unitOfWork.Platform.GetAll();
             return View("Index");
+        }
 
+        public ActionResult Create()
+        {
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
+            return this.View(new Platform());
+        }
+
+        [HttpPost]
+        public ActionResult Create(Platform newPlatform, FormCollection collection)
+        {
+            if (!collection.AllKeys.Contains("Games"))
+            {
+                this.ViewBag.ErrorMessage = "Please select at least one Game";
+            }
+            else
+            {
+
+                int[] gameIDs = Array.ConvertAll(collection["Games"].Split(','), int.Parse);
+                gameIDs.ForEach(id => newPlatform.Game.Add(this.unitOfWork.Game.GetById(id)));
+                this.unitOfWork.Platform.Add(newPlatform);
+                this.unitOfWork.Complete();
+                this.ViewBag.Message = "Platform was created";
+            }
+
+            this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
+            return this.View(this.unitOfWork.Platform.GetById(newPlatform.ID));
         }
     }
 }

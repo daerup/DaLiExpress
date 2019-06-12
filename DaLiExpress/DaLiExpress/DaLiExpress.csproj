@@ -253,6 +253,8 @@
     <Content Include="Views\Publisher\Edit.cshtml" />
     <Content Include="Views\Platform\Edit.cshtml" />
     <Content Include="Views\Special\Index.cshtml" />
+    <Content Include="Views\DeveloperStudio\Create.cshtml" />
+    <Content Include="Views\Platform\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

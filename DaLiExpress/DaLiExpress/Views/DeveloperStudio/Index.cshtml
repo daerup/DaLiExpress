@@ -12,6 +12,7 @@
             <input type="submit" value="Search" height="10" class="btn btn-default" id="search-btn" autofocus />
         </fieldset>
     }
+@(this.Html.ActionLink("Create", "Create"))
 
     @if (ViewBag.AllDeveloperStudios.Count == 0 == false)
     {
@@ -42,5 +43,5 @@
     }
     else
     {
-        <p>No results were found</p>
+        <p>No developer studios were found :(</p>
     }

@@ -45,7 +45,7 @@ namespace DaLiExpress.Controllers
                 this.UpdateNonMtoMProperties(editedPublisher);
                 this.UpdateGames(editedPublisher, gameIDs);
                 this.unitOfWork.Complete();
-                this.ViewBag.Message = "Gespeichert";
+                this.ViewBag.Message = "Saved";
             }
 
             this.ViewBag.Games = this.unitOfWork.Game.GetAll().ToList();
