@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6f8084ced34643cdbd07e04e378bfcdd" Name="Diagram1">
-        <EntityTypeShape EntityType="DaLi_GameExpressModel.DeveloperStudio" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DaLi_GameExpressModel.Game" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="DaLi_GameExpressModel.Platform" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DaLi_GameExpressModel.Publisher" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+      <Diagram DiagramId="6f8084ced34643cdbd07e04e378bfcdd" Name="Diagram1" ZoomLevel="127">
+        <EntityTypeShape EntityType="DaLi_GameExpressModel.DeveloperStudio" Width="1.5" PointX="0.75" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DaLi_GameExpressModel.Game" Width="1.5" PointX="3.125" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DaLi_GameExpressModel.Platform" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DaLi_GameExpressModel.Publisher" Width="1.5" PointX="5.5" PointY="2.625" IsExpanded="true" />
         <AssociationConnector Association="DaLi_GameExpressModel.FK_Game_Publisher" ManuallyRouted="false" />
         <AssociationConnector Association="DaLi_GameExpressModel.GameDeveloperStudio" ManuallyRouted="false" />
         <AssociationConnector Association="DaLi_GameExpressModel.GamePlatform" ManuallyRouted="false" />
